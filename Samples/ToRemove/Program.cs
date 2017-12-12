@@ -29,7 +29,7 @@ namespace ToRemove
             //a.CalculatePointsConfidence()
             //a.Dilation()
             //a.ToBinaryMarkup()
-            Zavolokas.Structures.Area2DGdiExtensions.
+            //Zavolokas.Structures.Area2DGdiExtensions.
             //a.ToBitmap(`)
             //a.ToConfidenceMap()
 
