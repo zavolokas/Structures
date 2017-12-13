@@ -1,8 +1,8 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using Zavolokas;
-using Zavolokas.ImageProcessing;
+using Zavolokas.GdiExtensions;
 using Zavolokas.Structures;
+using Zavolokas.Utils.Processes;
 
 namespace ConfidenceMap
 {
@@ -16,7 +16,7 @@ namespace ConfidenceMap
             markup
                 .CalculatePointsConfidence(1.5, 1.3)
                 .ToBitmap(markup, 25, 25)
-                .ScaleTo(400, 400, InterpolationMode.NearestNeighbor)
+                .CloneWithScaleTo(400, 400, InterpolationMode.NearestNeighbor)
                 .SaveTo(@"..\..\conf.png", ImageFormat.Png)
                 .ShowFile();
         }

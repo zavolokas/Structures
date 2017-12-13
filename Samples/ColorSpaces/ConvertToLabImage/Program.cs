@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Drawing.Imaging;
-using Zavolokas.ImageProcessing;
+using Zavolokas.GdiExtensions;
 using Zavolokas.Structures;
 
 namespace ConvertToLabImage

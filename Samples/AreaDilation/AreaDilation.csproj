@@ -64,7 +64,7 @@
       <Name>Zavolokas.Structures.Gdi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Zavolokas.Structures\Zavolokas.Structures.csproj">
-      <Project>{d582c85a-8597-48ce-82a9-c5297f91ae5d}</Project>
+      <Project>{D582C85A-8597-48CE-82A9-C5297F91AE5D}</Project>
       <Name>Zavolokas.Structures</Name>
     </ProjectReference>
   </ItemGroup>

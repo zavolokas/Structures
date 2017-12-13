@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using Zavolokas;
-using Zavolokas.ImageProcessing;
+using Zavolokas.GdiExtensions;
 using Zavolokas.Structures;
+using Zavolokas.Utils.Processes;
 
 namespace AreaDilation
 {
