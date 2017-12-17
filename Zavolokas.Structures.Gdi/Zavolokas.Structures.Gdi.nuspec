@@ -9,11 +9,11 @@
 		<projectUrl>https://github.com/zavolokas/Structures</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Allows to convert Area2D to an Image or visa versa.</description>
-		<releaseNotes>/releaseNotes>
+		<releaseNotes></releaseNotes>
 		<copyright>Copyright 2017</copyright>
 		<tags></tags>
 		<dependencies>
-			<dependency id="Zavolokas.Structures" version="1.0.0" />
+			<dependency id="Zavolokas.Structures" version="1.0.1" />
 		</dependencies>
 	</metadata>
 </package>
