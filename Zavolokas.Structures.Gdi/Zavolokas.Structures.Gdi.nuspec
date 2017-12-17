@@ -2,20 +2,18 @@
 <package >
 	<metadata>
 		<id>$id$</id>
-		<version>1.0.2</version>
+		<version>$version$</version>
 		<title>$title$</title>
 		<authors>Sergey Zavoloka</authors>
 		<owners>Sergey Zavoloka</owners>
-		<licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-		<projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-		<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+		<projectUrl>https://github.com/zavolokas/Structures</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>Handy math utils.</description>
-		<releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+		<description>Allows to convert Area2D to an Image or visa versa.</description>
+		<releaseNotes>/releaseNotes>
 		<copyright>Copyright 2017</copyright>
-		<tags>Tag1 Tag2</tags>
+		<tags></tags>
 		<dependencies>
-			<dependency id="Zavolokas.Structures" version="1.0.2" />
+			<dependency id="Zavolokas.Structures" version="1.0.0" />
 		</dependencies>
 	</metadata>
 </package>

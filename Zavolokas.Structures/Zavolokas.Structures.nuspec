@@ -2,18 +2,16 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.4</version>
+    <version>$version$</version>
     <title>$title$</title>
     <authors>Sergey Zavoloka</authors>
     <owners>Sergey Zavoloka</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <projectUrl>https://github.com/zavolokas/Structures</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Handy math utils.</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <description>Handy structures for image processing such as mappings, near neighbour field, vector, interval etc.</description>
+    <releaseNotes></releaseNotes>
     <copyright>Copyright 2017</copyright>
-    <tags>Tag1 Tag2</tags>
+    <tags>Area2D ZsImage Nnf Point Rectangle Vector2D Interval</tags>
     <dependencies>
       
     </dependencies>
