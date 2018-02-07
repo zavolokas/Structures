@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 
 namespace Zavolokas.Structures
 {
@@ -31,11 +32,18 @@ namespace Zavolokas.Structures
             return labImage.PyramidDownLab(true);
         }
 
-        public static ZsImage PyramidDownArgb(this ZsImage argbImage, bool blur)
+        public static ZsImage PyramidDownArgb(this ZsImage argbImage, bool blur = true)
+        {
+            var filterArea = Area2D.Create(0, 0, argbImage.Width, argbImage.Height);
+
+            return argbImage.PyramidDownArgb(filterArea, blur);
+        }
+
+        public static ZsImage PyramidDownArgb(this ZsImage argbImage, Area2D filterArea, bool blur = true)
         {
             if (blur)
             {
-                argbImage = argbImage.Filter(GaussianFilter, 5, 5, 1.0 / 16.0);
+                argbImage = argbImage.Filter(filterArea, GaussianFilter, 5, 5, 1.0 / 16.0);
             }
 
             argbImage = argbImage.ScaleDown2x();
@@ -123,15 +131,8 @@ namespace Zavolokas.Structures
 
             var imageBoundArea = Area2D.Create(0, 0, argbImage.Width, argbImage.Height);
 
-            // Does image contain transparent parts?
-            if (filterArea.ElementsCount != argbImage.Width * argbImage.Height)
-            {
-                // In that case we need to extend the pixel area in 
-                // order to apply the filtering
-                filterArea = filterArea
-                    .Dilation(System.Math.Max(filterWidth, filterHeight))
-                    .Intersect(imageBoundArea);
-            }
+            filterArea = filterArea
+                .Intersect(imageBoundArea);
 
             // The filter should be applied to the specified area of interest
             argbImage.FilterArea(filterArea, filter, filterWidth, filterHeight, multiplicator);
