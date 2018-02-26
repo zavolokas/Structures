@@ -5,4 +5,4 @@ install:
   - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Debug Zavolokas.Structures.sln
-  - mono ./testrunner/NUnit.Runners.3.8.0/tools/nunit-console.exe ./Zavolokas.Structures.UnitTests/bin/Debug/Zavolokas.Structures.UnitTests.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Zavolokas.Structures.UnitTests/bin/Debug/Zavolokas.Structures.UnitTests.dll
