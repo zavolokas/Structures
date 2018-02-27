@@ -118,6 +118,8 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 .OrderBy(x => x.Count())
                 .ToArray();
 
+            var output = new Dictionary<string, Bitmap>();
+
             for (var i = 0; i < testCases.Length; i++)
             {
                 var resultArea = Area2D.Create(0, 0, ts.Picture.Width, ts.Picture.Height);
@@ -127,14 +129,13 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
                 if (!resultArea.IsEmpty)
                 {
-                    SaveToOutput(resultArea, $"intersection{i}", testName, ts.Path);
+                    SaveToOutput(output, resultArea, $"intersection{i}", testName, ts.Path);
                 }
             }
 
             var reffiles = Directory.GetFiles($"{ts.Path}\\{testName}\\refs", "*.*", SearchOption.TopDirectoryOnly);
-            var outfiles = Directory.GetFiles($"{ts.Path}\\{testName}\\output", "*.*", SearchOption.TopDirectoryOnly);
 
-            if (reffiles.Length != outfiles.Length)
+            if (reffiles.Length != output.Count)
                 noDiffs = false;
 
             foreach (var refFilePath in reffiles)
@@ -142,28 +143,32 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 var refFileName = Path.GetFileName(refFilePath);
                 var outFilePath = $"{ts.Path}\\{testName}\\output\\{refFileName}";
 
-                if (!File.Exists(outFilePath))
+                if (!output.ContainsKey(outFilePath))
                 {
                     noDiffs = false;
                     continue;
                 }
 
                 var refArea = new Bitmap(refFilePath).ToArea();
-                var outArea = new Bitmap(outFilePath).ToArea();
+                var outArea = output[outFilePath].ToArea();
 
                 if (!refArea.IsSameAs(outArea)) noDiffs = false;
+            }
+
+            foreach (var entry in output)
+            {
+                entry.Value.Dispose();
             }
 
             return noDiffs;
         }
 
-        private static void SaveToOutput(Area2D area, string fileName, string testName, string testPath)
+        private static void SaveToOutput(Dictionary<string, Bitmap> output, Area2D area, string fileName, string testName, string testPath)
         {
             var bmp = area.ToBitmap(Color.Red);
             var dir = $"{testPath}\\{testName}\\output";
-            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
             var path = $"{dir}\\{fileName}.png";
-            bmp.Save(path, ImageFormat.Png);
+            output.Add(path, bmp);
         }
     }
 }
