@@ -19,15 +19,15 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
             {
                 Path = System.IO.Path.GetFullPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $@"..\..\Data\images\{size}"))
             };
-            ts.Picture = new Bitmap($"{ts.Path}\\picture.png");
-            ts.RemoveMarkup = new Bitmap($"{ts.Path}\\inpaintarea.bmp");
+            ts.Picture = new Bitmap(System.IO.Path.Combine($"{ts.Path}", "picture.png"));
+            ts.RemoveMarkup = new Bitmap(System.IO.Path.Combine($"{ts.Path}","inpaintarea.bmp"));
             var donors = new List<Bitmap>
             {
-                new Bitmap($"{ts.Path}\\donor0.bmp"),
-                new Bitmap($"{ts.Path}\\donor1.bmp"),
-                new Bitmap($"{ts.Path}\\donor2.bmp"),
-                new Bitmap($"{ts.Path}\\donor3.bmp"),
-                new Bitmap($"{ts.Path}\\donor4.bmp")
+                new Bitmap(System.IO.Path.Combine($"{ts.Path}","donor0.bmp")),
+                new Bitmap(System.IO.Path.Combine($"{ts.Path}","donor1.bmp")),
+                new Bitmap(System.IO.Path.Combine($"{ts.Path}","donor2.bmp")),
+                new Bitmap(System.IO.Path.Combine($"{ts.Path}","donor3.bmp")),
+                new Bitmap(System.IO.Path.Combine($"{ts.Path}","donor4.bmp"))
             };
             ts.Donors = donors;
             return ts;
