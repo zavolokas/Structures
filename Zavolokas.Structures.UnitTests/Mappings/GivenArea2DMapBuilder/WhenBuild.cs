@@ -351,6 +351,31 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
         }
 
         [Test]
+        public void DestPoints_That_Reside_In_Multiple_AssociatedAreas_Should_Point_To_The_Last_Added_Source_Area()
+        {
+            _mapBuilder.InitNewMap(_destArea, _sourceArea);
+
+            var donor1Dest = Area2D.Create(0, 0, 3, 3);
+            var donor1Source = Area2D.Create(0, 0, 3, 3);
+            _mapBuilder.AddAssociatedAreas(donor1Dest, donor1Source);
+
+            var donor2Dest = Area2D.Create(2, 2, 3, 3);
+            var donor2Source = Area2D.Create(3, 3, 3, 3);
+            _mapBuilder.AddAssociatedAreas(donor2Dest, donor2Source);
+
+            var commonDest = donor1Dest.Intersect(donor2Dest);
+
+            var mapping = _mapBuilder.Build();
+
+            foreach (var point in commonDest.Points)
+            {
+                var source = mapping.GetPointSourceArea(point);
+                Assert.That(source.IsSameAs(donor2Source));
+            }
+        }
+
+        [Test]
+        [Ignore("Wrong assumption, this area will point to the last added")]
         public void DestPoints_That_Reside_In_Multiple_AssociatedAreas_Should_Point_To_Joint_Source_Area()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
