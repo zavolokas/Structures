@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Area2DExtensions.cs" />
     <Compile Include="Areas\Area2D.cs" />
+    <Compile Include="Areas\Area2DState.cs" />
     <Compile Include="BinaryMarkupExtensions.cs" />
     <Compile Include="Extensions\ImageExtensions.Converting.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />

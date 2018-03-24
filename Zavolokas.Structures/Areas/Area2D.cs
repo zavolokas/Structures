@@ -55,7 +55,7 @@ namespace Zavolokas.Structures
         private readonly int[] _rowIndexesTable;
 
         private readonly IntervalsData[] _rowsData;
-        private readonly Dictionary<int,int> _rowLocGlobIndexMap = new Dictionary<int, int>();
+        //private readonly Dictionary<int,int> _rowLocGlobIndexMap = new Dictionary<int, int>();
 
         /// <summary>
         /// Horisontal offset of the area.
@@ -85,6 +85,11 @@ namespace Zavolokas.Structures
             return new Area2D(x, y, markup);
         }
 
+        public static Area2D RestoreFrom(Area2DState state)
+        {
+            return new Area2D(state);
+        }
+
         internal Area2D(int x, int y, int width, int height)
         {
             if (width < 0 || height < 0)
@@ -111,7 +116,7 @@ namespace Zavolokas.Structures
                 _lastElementInRowAbsoluteIndex[i] = row.LastElementAbsoluteIndex;
                 _rowIndexesTable[i] = i;
                 _rowsData[i] = row;
-                _rowLocGlobIndexMap.Add(row.OffsY,i);
+                //_rowLocGlobIndexMap.Add(row.OffsY,i);
             }
 
             ElementsCount = width * height;
@@ -205,7 +210,7 @@ namespace Zavolokas.Structures
                         IntervalLastElementIndexes = ilei,
                     };
                     dataRows.Add(datarow);
-                    _rowLocGlobIndexMap.Add(datarow.OffsY, dataRows.Count-1);
+                    //_rowLocGlobIndexMap.Add(datarow.OffsY, dataRows.Count-1);
 
                     rowIndexes.Add(j);
                     lastElementInRowAbsoluteIndex.Add(absElementIndex - 1);
@@ -241,13 +246,39 @@ namespace Zavolokas.Structures
                 _rowsData[i].LastElementAbsoluteIndex = ElementsCount - 1;
                 _lastElementInRowAbsoluteIndex[i] = ElementsCount - 1;
                 _rowIndexesTable[i] = row.OffsY;
-                _rowLocGlobIndexMap.Add(row.OffsY, i);
+                //_rowLocGlobIndexMap.Add(row.OffsY, i);
             }
 
             int width = right - left + 1;
             int height = _rowsData[_rowsData.Length - 1].OffsY + 1;
 
             Bound = new Rectangle(left + position.X, position.Y, width, height);
+        }
+
+        internal Area2D(Area2DState state)
+        {
+            Bound = new Rectangle(state.X, state.Y, state.Width, state.Height);
+            _lastElementInRowAbsoluteIndex = state.LastElementInRowAbsoluteIndex;
+            _offsX = state.OffsX;
+            _rowIndexesTable = state.RowIndexesTable;
+            _rowsData = state.RowsData.Select(intervalState => new IntervalsData(intervalState)).ToArray();
+            ElementsCount = state.ElementsCount;
+        }
+
+        public Area2DState GetState()
+        {
+            return new Area2DState
+            {
+                LastElementInRowAbsoluteIndex = _lastElementInRowAbsoluteIndex,
+                OffsX = _offsX,
+                RowIndexesTable = _rowIndexesTable,
+                X = Bound.X,
+                Y = Bound.Y,
+                Width = Bound.Width,
+                Height = Bound.Height,
+                RowsData = _rowsData.Select(rd => rd.GetState()).ToArray(),
+                ElementsCount = ElementsCount
+            };
         }
 
         /// <summary>
@@ -1220,7 +1251,7 @@ namespace Zavolokas.Structures
                 else if (key > a[mid]) lo = mid + 1;
                 //else return mid;
             }
-            return a.Length-1;
+            return a.Length - 1;
         }
 
         //private static int FindIntervalIndex(int[] intervals, int item)
@@ -1264,6 +1295,29 @@ namespace Zavolokas.Structures
                 }
 
                 LastElementAbsoluteIndex = ElementsCount - 1;
+            }
+
+            public IntervalsData(IntervalState state)
+            {
+                ElementsCount = state.ElementsCount;
+                IntervalLastElementIndexes = state.IntervalLastElementIndexes;
+                IntervalLastElementPositions = state.IntervalLastElementPositions;
+                LastElementAbsoluteIndex = state.LastElementAbsoluteIndex;
+                OffsY = state.OffsY;
+                TotalSpacesCountBeforeIntervals = state.TotalSpacesCountBeforeIntervals;
+            }
+
+            public IntervalState GetState()
+            {
+                return new IntervalState
+                {
+                    ElementsCount = ElementsCount,
+                    IntervalLastElementIndexes = IntervalLastElementIndexes,
+                    IntervalLastElementPositions = IntervalLastElementPositions,
+                    LastElementAbsoluteIndex = LastElementAbsoluteIndex,
+                    OffsY = OffsY,
+                    TotalSpacesCountBeforeIntervals = TotalSpacesCountBeforeIntervals
+                };
             }
 
             /// <summary>
