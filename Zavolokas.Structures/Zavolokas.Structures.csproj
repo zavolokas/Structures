@@ -58,6 +58,7 @@
     <Compile Include="Mappings\IAreasMapping.cs" />
     <Compile Include="Nnf.cs" />
     <Compile Include="NnfExtensions.cs" />
+    <Compile Include="NnfState.cs" />
     <Compile Include="Primitives\Interval.cs" />
     <Compile Include="Primitives\Point.cs" />
     <Compile Include="Primitives\Rectangle.cs" />

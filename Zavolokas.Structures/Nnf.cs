@@ -21,6 +21,17 @@ namespace Zavolokas.Structures
             _nnf = new double[dstWidth * dstHeight * 2];
         }
 
+        public Nnf(NnfState state)
+        {
+            DstWidth = state.DstWidth;
+            DstHeight = state.DstHeight;
+            SourceWidth = state.SourceWidth;
+            SourceHeight = state.SourceHeight;
+            PatchSize = state.PatchSize;
+
+            _nnf = state.NnfItems;
+        }
+
         public int PatchSize { get; }
 
         public int SourceWidth { get; }
@@ -35,10 +46,23 @@ namespace Zavolokas.Structures
             return _nnf;
         }
 
+        public NnfState GetState()
+        {
+            return new NnfState
+            {
+                NnfItems = _nnf,
+                DstHeight = DstHeight,
+                DstWidth = DstWidth,
+                PatchSize = PatchSize,
+                SourceHeight = SourceHeight,
+                SourceWidth = SourceWidth
+            };
+        }
+
         public Nnf Clone()
         {
             var clone = new Nnf(DstWidth, DstHeight, SourceWidth, SourceHeight, PatchSize);
-            _nnf.CopyTo(clone._nnf,0);
+            _nnf.CopyTo(clone._nnf, 0);
 
             return clone;
         }
