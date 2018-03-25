@@ -50,6 +50,25 @@ namespace Zavolokas.Structures
             _sourceArea = areas.Aggregate(Area2D.Empty, (current, t) => current.Join(t.Item2));
         }
 
+        public Area2DMap(Area2DMapState state)
+        {
+            _areas = state.Areas.Select(t => new Tuple<Area2D, Area2D>(Area2D.RestoreFrom(t[0]), Area2D.RestoreFrom(t[1]))).ToArray();
+            _outsideArea = Area2D.RestoreFrom(state.OutsideAreaState);
+            _destArea = Area2D.RestoreFrom(state.DestAreaState);
+            _sourceArea = Area2D.RestoreFrom(state.SourceAreaState);
+        }
+
+        public Area2DMapState GetState()
+        {
+            return new Area2DMapState
+            {
+                DestAreaState = _destArea.GetState(),
+                SourceAreaState = _sourceArea.GetState(),
+                OutsideAreaState = _outsideArea.GetState(),
+                Areas = _areas.Select(t => new[] { t.Item1.GetState(), t.Item2.GetState() }).ToArray()
+            };
+        }
+
         /// <summary>
         /// Gets the source area for the specified point.
         /// </summary>
@@ -78,7 +97,7 @@ namespace Zavolokas.Structures
             get
             {
                 var areas = new Tuple<Area2D, Area2D>[_areas.Length];
-                _areas.CopyTo(areas,0);
+                _areas.CopyTo(areas, 0);
                 return areas;
             }
         }
@@ -111,7 +130,7 @@ namespace Zavolokas.Structures
         /// <value>
         /// The dest elements count.
         /// </value>
-        public int DestElementsCount{ get { return _destArea.ElementsCount; } }
+        public int DestElementsCount { get { return _destArea.ElementsCount; } }
 
         /// <summary>
         /// Gets the dest points.
@@ -123,7 +142,7 @@ namespace Zavolokas.Structures
         /// Contains all the points from the destination areas without duplications.
         /// Points are ordered from the left to the right and from the top to the bottom.
         /// </remarks>
-        public IEnumerable<Point> DestPoints {get { return _destArea.Points; }}
+        public IEnumerable<Point> DestPoints { get { return _destArea.Points; } }
 
         /// <summary>
         /// Gets the bounds that contain all the dest areas.

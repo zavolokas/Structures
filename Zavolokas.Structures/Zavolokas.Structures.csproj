@@ -53,6 +53,7 @@
     <Compile Include="Images\ZsImage.cs" />
     <Compile Include="Mappings\Area2DMap.cs" />
     <Compile Include="Mappings\Area2DMapBuilder.cs" />
+    <Compile Include="Mappings\Area2DMapState.cs" />
     <Compile Include="Mappings\EmptyAreaException.cs" />
     <Compile Include="Mappings\IArea2DMapBuilder.cs" />
     <Compile Include="Mappings\IAreasMapping.cs" />
