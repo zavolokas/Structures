@@ -1,70 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D582C85A-8597-48CE-82A9-C5297F91AE5D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zavolokas.Structures</RootNamespace>
-    <AssemblyName>Zavolokas.Structures</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Area2DExtensions.cs" />
-    <Compile Include="Areas\Area2D.cs" />
-    <Compile Include="Areas\Area2DState.cs" />
-    <Compile Include="BinaryMarkupExtensions.cs" />
-    <Compile Include="Extensions\ImageExtensions.Converting.cs" />
-    <Compile Include="Extensions\ImageExtensions.cs" />
-    <Compile Include="Images\DifferentImageFormatException.cs" />
-    <Compile Include="Images\ZsImage.cs" />
-    <Compile Include="Mappings\Area2DMap.cs" />
-    <Compile Include="Mappings\Area2DMapBuilder.cs" />
-    <Compile Include="Mappings\Area2DMapState.cs" />
-    <Compile Include="Mappings\EmptyAreaException.cs" />
-    <Compile Include="Mappings\IArea2DMapBuilder.cs" />
-    <Compile Include="Mappings\IAreasMapping.cs" />
-    <Compile Include="Nnf.cs" />
-    <Compile Include="NnfExtensions.cs" />
-    <Compile Include="NnfState.cs" />
-    <Compile Include="Primitives\Interval.cs" />
-    <Compile Include="Primitives\Point.cs" />
-    <Compile Include="Primitives\Rectangle.cs" />
-    <Compile Include="Primitives\Vector2D.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0</TargetFrameworks>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <FileVersion>2.0.0.0</FileVersion>
+        <PackageProjectUrl>https://github.com/zavolokas/Structures</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/zavolokas/Structures</RepositoryUrl>
+        <Version>2.0.0</Version>
+    </PropertyGroup>
 </Project>
