@@ -9,9 +9,9 @@ steps:
       NUGETKEY:
         from_secret: NUGET_KEY
     commands:
-      - dotnet build Zavolokas.Structures/Zavolokas.Structures -c Release
-      - dotnet pack Zavolokas.Structures/Zavolokas.Structures -c Release -p:PackageVersion=2.0.0.$${DRONE_BUILD_NUMBER}
-      - dotnet nuget push Zavolokas.Structures/Zavolokas.Structures/bin/Release/Zavolokas.Structures.2.0.0.$${DRONE_BUILD_NUMBER}.nupkg -s https://api.nuget.org/v3/index.json -k $${NUGETKEY}
+      - dotnet build Zavolokas.Structures -c Release
+      - dotnet pack Zavolokas.Structures -c Release -p:PackageVersion=2.0.0.$${DRONE_BUILD_NUMBER}
+      - dotnet nuget push Zavolokas.Structures/bin/Release/Zavolokas.Structures.2.0.0.$${DRONE_BUILD_NUMBER}.nupkg -s https://api.nuget.org/v3/index.json -k $${NUGETKEY}
     when:
       event: [push]
       branch: [convert-to-standard]
