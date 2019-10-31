@@ -17,7 +17,7 @@ namespace Substraction
 
             area3
                 .ToBitmap(Color.Red)
-                .SaveTo("..\\..\\out.png", ImageFormat.Png)
+                .SaveTo("..\\..\\..\\out.png", ImageFormat.Png)
                 .ShowFile();
 
         }

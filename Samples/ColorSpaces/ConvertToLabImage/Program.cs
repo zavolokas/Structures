@@ -11,7 +11,7 @@ namespace ConvertToLabImage
     {
         static void Main(string[] args)
         {
-            string imagesPath = "..\\..\\images";
+            string imagesPath = "..\\..\\..\\images";
             string testSetName = "256x128";
             string fileName = "picture.png";
             string inputPath = $"{imagesPath}\\{testSetName}";

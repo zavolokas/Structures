@@ -11,7 +11,7 @@ namespace CopyImagePart
     {
         static void Main(string[] args)
         {
-            const string basePath = "..\\..\\..\\..\\..\\images";
+            const string basePath = "..\\..\\..\\..\\..\\..\\images";
 
             var bitmap1 = new Bitmap(Path.Combine(basePath, "pm1.png"));
             var image1 = bitmap1.ToRgbImage();
@@ -30,7 +30,7 @@ namespace CopyImagePart
             image1
                 .CopyFromImage(dstArea, image2, srcArea)
                 .FromRgbToBitmap()
-                .SaveTo(@"..\..\out.png", ImageFormat.Png)
+                .SaveTo(@"..\..\..\out.png", ImageFormat.Png)
                 .ShowFile();
         }
     }

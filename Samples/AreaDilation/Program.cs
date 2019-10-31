@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
-using Zavolokas;
 using Zavolokas.GdiExtensions;
 using Zavolokas.Structures;
 using Zavolokas.Utils.Processes;
@@ -24,7 +23,7 @@ namespace AreaDilation
                 .Join(shape.Translate(64, 64))
                 .Intersect(imageArea)
                 .ToBitmap(Color.Red, 200, 140)
-                .SaveTo("..\\..\\out.png", ImageFormat.Png)
+                .SaveTo("..\\..\\..\\out.png", ImageFormat.Png)
                 .ShowFile();
         }
     }

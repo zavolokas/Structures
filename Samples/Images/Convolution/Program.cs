@@ -11,7 +11,7 @@ namespace Convolution
     {
         static void Main(string[] args)
         {
-            const string basePath = "..\\..\\..\\..\\..\\images";
+            const string basePath = "..\\..\\..\\..\\..\\..\\images";
 
             var bitmap = new Bitmap(Path.Combine(basePath, "pm2.png"));
             var image = bitmap.ToRgbImage();
@@ -41,7 +41,7 @@ namespace Convolution
                 //.Filter(filterArea, blurFilter, 5, 5, 1.0 / 16.0)
                 .Filter(filterArea, edgeFilter, 3, 3)
                 .FromRgbToBitmap()
-                .SaveTo(@"..\..\out.png", ImageFormat.Png)
+                .SaveTo(@"..\..\..\out.png", ImageFormat.Png)
                 .ShowFile();
         }
     }

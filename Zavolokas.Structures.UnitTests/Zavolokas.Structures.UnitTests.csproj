@@ -1,116 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7FE517B6-5558-41BF-8DC8-5B9D66900F0F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zavolokas.Structures.UnitTests</RootNamespace>
-    <AssemblyName>Zavolokas.Structures.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Zavolokas.Math, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Zavolokas.Math.1.0.0\lib\net462\Zavolokas.Math.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Mappings\GivenArea2DMapBuilder\WhenAddAssociatedAreas.cs" />
-    <Compile Include="Mappings\GivenArea2DMapBuilder\WhenAddMapping.cs" />
-    <Compile Include="Mappings\GivenArea2DMapBuilder\WhenBuild.cs" />
-    <Compile Include="Mappings\GivenArea2DMapBuilder\WhenInitNewMap.cs" />
-    <Compile Include="Mappings\GivenArea2DMapBuilder\WhenReduceDestArea.cs" />
-    <Compile Include="Mappings\GivenArea2DMapBuilder\WhenSetIgnoredSourcedArea.cs" />
-    <Compile Include="Mappings\GivenArea2DMap\WhenCtor.cs" />
-    <Compile Include="Mappings\GivenArea2DMap\WhenGetDestBound.cs" />
-    <Compile Include="Mappings\GivenArea2DMap\WhenGetDestElementsCount.cs" />
-    <Compile Include="Mappings\GivenArea2DMap\WhenGetDestPoints.cs" />
-    <Compile Include="Mappings\GivenArea2DMap\WhenGetPointSourceArea.cs" />
-    <Compile Include="Mappings\GivenArea2DMap\WhenUseIndexer.cs" />
-    <Compile Include="Areas\GivenArea2D\TestSet.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenTranslate.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenIntersect.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenIsSameAs.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenJoin.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenSubstract.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenGetBound.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenCreate.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenEmpty.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenCtorWithMarked.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenGetElementsCount.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenGetIndexOfPoint.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenGetPointByIndex.cs" />
-    <Compile Include="Areas\GivenArea2D\WhenCtorWithSize.cs" />
-    <Compile Include="Primitives\GivenInterval\WhenSubstract.cs" />
-    <Compile Include="Primitives\GivenInterval\WhenJoin.cs" />
-    <Compile Include="Primitives\GivenInterval\WhenIntersect.cs" />
-    <Compile Include="Primitives\GivenVector2D\WhenCompareVectors.cs" />
-    <Compile Include="Primitives\GivenVector2D\WhenCreateVector2D.cs" />
-    <Compile Include="Primitives\GivenVector2D\WhenGetOrtoronal.cs" />
-    <Compile Include="Primitives\GivenVector2D\WhenGetVectorSquaredLength.cs" />
-    <Compile Include="Primitives\GivenVector2D\WhenMultiplyVectors.cs" />
-    <Compile Include="Primitives\GivenVector2D\WhenSumVectors.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Images\GivenZsImage\WhenInsertComponents.cs" />
-    <Compile Include="Images\GivenZsImage\WhenRemoveComponents.cs" />
-    <Compile Include="Images\GivenZsImage\WhenSetComponentsValues.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Zavolokas.Structures.Gdi\Zavolokas.Structures.Gdi.csproj">
-      <Project>{a34a5150-593a-4bcb-a45c-ad0b2c1e4095}</Project>
-      <Name>Zavolokas.Structures.Gdi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Zavolokas.Structures\Zavolokas.Structures.csproj">
-      <Project>{d582c85a-8597-48ce-82a9-c5297f91ae5d}</Project>
-      <Name>Zavolokas.Structures</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <TargetFramework>netcoreapp3.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="NUnit" Version="3.12.0" />
+      <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
+      <PackageReference Include="Zavolokas.Math" Version="1.0.1.24" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Zavolokas.Structures.Gdi\Zavolokas.Structures.Gdi.csproj" />
+      <ProjectReference Include="..\Zavolokas.Structures\Zavolokas.Structures.csproj" />
+    </ItemGroup>
 </Project>
