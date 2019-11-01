@@ -1,48 +1,48 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
-    [TestFixture]
     public class WhenIsSameAs
     {
-        [Test]
+        [Fact]
         public void Should_Throw_ArgumentNullException_When_Area2_Is_Null()
         {
             var a1 = Area2D.Create(0, 0, 0, 0);
             Area2D a2 = null;
 
-            Assert.Throws<ArgumentNullException>(() => a1.IsSameAs(a2));
+            Should.Throw<ArgumentNullException>(() => a1.IsSameAs(a2));
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_True_When_Both_Are_Empty()
         {
             var a1 = Area2D.Create(0, 0, 0, 0);
             var a2 = Area2D.Create(12, 2, 0, 10);
 
-            Assert.That(a1.IsSameAs(a2), Is.True);
+            a1.IsSameAs(a2).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_False_When_Area1_Is_Empty()
         {
             var a1 = Area2D.Create(0, 0, 0, 0);
             var a2 = Area2D.Create(12, 2, 10, 10);
 
-            Assert.That(a1.IsSameAs(a2), Is.False);
+            a1.IsSameAs(a2).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_False_When_Area2_Is_Empty()
         {
             var a1 = Area2D.Create(12, 2, 10, 10);
             var a2 = Area2D.Create(0, 0, 0, 0);
 
-            Assert.That(a1.IsSameAs(a2), Is.False);
+            a1.IsSameAs(a2).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_False_When_Area1_Contains_Additional_Points()
         {
             var a1 = Area2D.Create(0, 0,
@@ -74,10 +74,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 });
 
 
-            Assert.That(a1.IsSameAs(a2), Is.False);
+            a1.IsSameAs(a2).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_False_When_Area2_Contains_Additional_Points()
         {
             var a1 = Area2D.Create(0, 0,
@@ -109,10 +109,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 });
 
 
-            Assert.That(a1.IsSameAs(a2), Is.False);
+            a1.IsSameAs(a2).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_True_When_All_Points_Are_Same()
         {
             var points = new[]
@@ -126,7 +126,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             var a2 = Area2D.Create(-1, -1, 3, 3);
 
-            Assert.That(a1.IsSameAs(a2), Is.True);
+            a1.IsSameAs(a2).ShouldBeTrue();
         }
     }
 }

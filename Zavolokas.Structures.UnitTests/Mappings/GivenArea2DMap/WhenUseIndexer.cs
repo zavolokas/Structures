@@ -1,36 +1,35 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
 {
-    [TestFixture]
     public class WhenUseIndexer
     {
         private Area2D _emptyArea;
 
-        [SetUp]
-        public void Setup()
+        public WhenUseIndexer()
         {
             _emptyArea = Area2D.Empty;
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_IndexOutOfRangeException_When_Index_Less_Than_Zero()
         {
             var areas = new[] { new Tuple<Area2D, Area2D>(Area2D.Create(0, 0, 10, 10), Area2D.Create(0, 0, 10, 10)) };
             var map = new Area2DMap(areas, _emptyArea);
-            Assert.Throws<IndexOutOfRangeException>(() => { var p = map[-1]; });
+            Should.Throw<IndexOutOfRangeException>(() => { var p = map[-1]; });
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_IndexOutOfRangeException_When_Index_Greater_Than_DestElementsCount()
         {
             var areas = new[] { new Tuple<Area2D, Area2D>(Area2D.Create(0, 0, 10, 10), Area2D.Create(0, 0, 10, 10)) };
             var map = new Area2DMap(areas, _emptyArea);
-            Assert.Throws<IndexOutOfRangeException>(() => { var p = map[100]; });
+            Should.Throw<IndexOutOfRangeException>(() => { var p = map[100]; });
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Points_That_Contained_In_Dest_Area()
         {
             var srcArea = Area2D.Create(0, 0, 3, 3);
@@ -59,11 +58,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
                     }
                 }
 
-                Assert.That(found);
+                found.ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void Should_Contain_Points_From_Dest_Areas()
         {
             var srcArea = Area2D.Create(0, 0, 3, 3);
@@ -92,12 +91,12 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
                             found = true;
                     }
 
-                    Assert.That(found);
+                    found.ShouldBeTrue();
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Ordered_From_Left_To_Right_From_Top_To_Bottom()
         {
             var srcArea = Area2D.Create(0, 0, 3, 3);
@@ -115,7 +114,7 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
             {
                 var point = areaMap[i];
                 var index = point.Y * 1000 + point.X;
-                Assert.That(index, Is.GreaterThan(prevIndex));
+                index.ShouldBeGreaterThan(prevIndex);
 
                 prevIndex = index;
             }

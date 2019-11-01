@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 {
-    [TestFixture]
     public class WhenSumVectors
     {
-        [Test]
+        [Fact]
         public void ShouldSumVectors()
         {
             var v1 = new Vector2D(-2, 45);
@@ -13,11 +13,11 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var sum = v1 + v2;
 
-            Assert.AreEqual(18, sum.X);
-            Assert.AreEqual(50, sum.Y);
+            sum.X.ShouldBe(18);
+            sum.Y.ShouldBe(50);
         }
 
-        [Test]
+        [Fact]
         public void ShouldMinusVectors()
         {
             var v1 = new Vector2D(12, 25);
@@ -25,11 +25,11 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var sum = v1 - v2;
 
-            Assert.AreEqual(-8, sum.X);
-            Assert.AreEqual(20, sum.Y);
+            sum.X.ShouldBe(-8);
+            sum.Y.ShouldBe(20);
         }
 
-        [Test]
+        [Fact]
         public void ShouldSumVectorAndPoint()
         {
             var v1 = new Vector2D(12, 25);
@@ -37,12 +37,12 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var sum = v1 + pt;
 
-            Assert.AreEqual(-18, sum.X);
-            Assert.AreEqual(35, sum.Y);
+            sum.X.ShouldBe(-18);
+            sum.Y.ShouldBe(35);
 
         }
 
-        [Test]
+        [Fact]
         public void ShouldSumPointAndVector()
         {
             var v1 = new Vector2D(12, 25);
@@ -50,12 +50,12 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var sum = pt + v1;
 
-            Assert.AreEqual(-18, sum.X);
-            Assert.AreEqual(35, sum.Y);
+            sum.X.ShouldBe(-18);
+            sum.Y.ShouldBe(35);
 
         }
 
-        [Test]
+        [Fact]
         public void ShouldMinusVectorAndPoint()
         {
             var v1 = new Vector2D(12, 25);
@@ -63,11 +63,11 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var sum = v1 - pt;
 
-            Assert.AreEqual(42, sum.X);
-            Assert.AreEqual(15, sum.Y);
+            sum.X.ShouldBe(42);
+            sum.Y.ShouldBe(15);
         }
 
-        [Test]
+        [Fact]
         public void ShouldMinusPointAndVector()
         {
             var v1 = new Vector2D(12, 25);
@@ -75,8 +75,8 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var sum = pt - v1;
 
-            Assert.AreEqual(-42, sum.X);
-            Assert.AreEqual(-15, sum.Y);
+            sum.X.ShouldBe(-42);
+            sum.Y.ShouldBe(-15);
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
 {
-    [TestFixture]
     public class WhenGetPointSourceArea
     {
-        [Test]
+        [Fact]
         public void Should_Return_Empty_Area_When_Dest_Not_Contain_Point()
         {
             var srcArea = Area2D.Create(0, 0, 3, 3);
@@ -21,10 +21,10 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
             var areaMap = new Area2DMap(areas, emptyArea);
 
             var result = areaMap.GetPointSourceArea(new Point(-10, 0));
-            Assert.That(result.IsEmpty);
+            result.IsEmpty.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Source_That_Relates_To_Last_Dest_When_Point_Belongs_To_Several_Dest_Areas()
         {
             var srcArea1 = Area2D.Create(0, 0, 3, 3);
@@ -42,26 +42,27 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
 
             var result = areaMap.GetPointSourceArea(new Point(4, 4));
 
-            Assert.That(result.IsSameAs(srcArea2));
+            result.IsSameAs(srcArea2).ShouldBeTrue();
         }
 
-        [TestCase(0, 0, ExpectedResult = 3)]
-        [TestCase(0, 4, ExpectedResult = 1)]
-        [TestCase(4, 0, ExpectedResult = 1)]
-        [TestCase(4, 4, ExpectedResult = 2)]
-        [TestCase(4, 2, ExpectedResult = 1)]
-        [TestCase(2, 2, ExpectedResult = 3)]
-        [TestCase(5, 5, ExpectedResult = 2)]
-        [TestCase(5, 9, ExpectedResult = 2)]
-        [TestCase(9, 5, ExpectedResult = 2)]
-        [TestCase(9, 9, ExpectedResult = 2)]
-        [TestCase(7, 7, ExpectedResult = 2)]
-        [TestCase(-3, -3, ExpectedResult = 3)]
-        [TestCase(-3, -1, ExpectedResult = 3)]
-        [TestCase(-1, -3, ExpectedResult = 3)]
-        [TestCase(-1, -1, ExpectedResult = 3)]
-        [TestCase(-2, -2, ExpectedResult = 3)]
-        public byte Should_Return_Related_Source_Area(int x, int y)
+        [Theory]
+        [InlineData(0, 0, 3)]
+        [InlineData(0, 4, 1)]
+        [InlineData(4, 0, 1)]
+        [InlineData(4, 4, 2)]
+        [InlineData(4, 2, 1)]
+        [InlineData(2, 2, 3)]
+        [InlineData(5, 5, 2)]
+        [InlineData(5, 9, 2)]
+        [InlineData(9, 5, 2)]
+        [InlineData(9, 9, 2)]
+        [InlineData(7, 7, 2)]
+        [InlineData(-3, -3, 3)]
+        [InlineData(-3, -1, 3)]
+        [InlineData(-1, -3, 3)]
+        [InlineData(-1, -1, 3)]
+        [InlineData(-2, -2, 3)]
+        public void Should_Return_Related_Source_Area(int x, int y, byte option)
         {
             var srcArea1 = Area2D.Create(0, 0, 3, 3);
             var srcArea2 = Area2D.Create(3, 3, 3, 3);
@@ -78,10 +79,13 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
 
             var result = areaMap.GetPointSourceArea(new Point(x, y));
 
-            if (result.IsSameAs(srcArea1)) return 1;
-            if (result.IsSameAs(srcArea2)) return 2;
-            if (result.IsSameAs(srcArea3)) return 3;
-            return 0;
+            if (option == 1)
+                result.IsSameAs(srcArea1).ShouldBeTrue();
+            else if (option == 2)
+                result.IsSameAs(srcArea2).ShouldBeTrue();
+            else if (option == 3)
+                result.IsSameAs(srcArea3).ShouldBeTrue();
+
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 {
-    [TestFixture]
     public class WhenBuild
     {
         private Area2D _destArea;
@@ -13,8 +13,7 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
         private Area2DMapBuilder _mapBuilder;
         private Area2DMap _initialMapping;
 
-        [SetUp]
-        public void Setup()
+        public WhenBuild()
         {
             _mapBuilder = new Area2DMapBuilder();
 
@@ -33,13 +32,13 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             _initialMapping = new Area2DMap(areas, _emptyArea);
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_MapIsNotInitializedException_When_Called_Before_InitMap_Call()
         {
             Assert.Throws<MapIsNotInitializedException>(() => _mapBuilder.Build());
         }
 
-        [Test]
+        [Fact]
         public void Every_Dest_Point_From_Result_Should_Present_In_DestArea()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -47,11 +46,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var destPoint in mapping.DestPoints)
             {
-                Assert.That(_destArea.Points.Contains(destPoint));
+                _destArea.Points.Contains(destPoint).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Contain_Every_Point_From_Dest_Area()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -59,11 +58,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var point in _destArea.Points)
             {
-                Assert.That(mapping.DestPoints.Contains(point));
+                mapping.DestPoints.Contains(point).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void Every_Dest_Point_Of_Result_Should_Be_Associated_With_Source_Area()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -71,11 +70,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var destPoint in mapping.DestPoints)
             {
-                Assert.That(mapping.GetPointSourceArea(destPoint).IsSameAs(_sourceArea));
+                mapping.GetPointSourceArea(destPoint).IsSameAs(_sourceArea).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void New_Mapping_Should_Contain_DestPoints_That_Present_In_The_Initialization_Mapping()
         {
             _mapBuilder.InitNewMap(_initialMapping);
@@ -83,11 +82,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var destPoint in newMapping.DestPoints)
             {
-                Assert.That(_initialMapping.DestPoints.Contains(destPoint));
+                _initialMapping.DestPoints.Contains(destPoint).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void Every_Point_From_InitMapping_Should_Present_In_Result_Mapping()
         {
             _mapBuilder.InitNewMap(_initialMapping);
@@ -95,11 +94,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var destPoint in _initialMapping.DestPoints)
             {
-                Assert.That(newMapping.DestPoints.Contains(destPoint));
+                newMapping.DestPoints.Contains(destPoint).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void DestPoints_Of_Result_Mapping_Should_Point_To_The_Same_Area_As_The_Initialization_Mapping()
         {
             _mapBuilder.InitNewMap(_initialMapping);
@@ -109,11 +108,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             {
                 var newMappingDestPointSourceArea = newMapping.GetPointSourceArea(destPoint);
                 var initMappingDestPointSourceArea = _initialMapping.GetPointSourceArea(destPoint);
-                Assert.That(newMappingDestPointSourceArea.IsSameAs(initMappingDestPointSourceArea));
+                newMappingDestPointSourceArea.IsSameAs(initMappingDestPointSourceArea).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void Should_Discard_All_The_Settings_That_Were_Made_Before_Init()
         {
             _mapBuilder.InitNewMap(_initialMapping);
@@ -127,18 +126,18 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var destPoint in mapping.DestPoints)
             {
-                Assert.That(_destArea.GetPointIndex(destPoint), Is.GreaterThan(-1));
-                Assert.That(mapping.GetPointSourceArea(destPoint).IsSameAs(_sourceArea));
+                _destArea.GetPointIndex(destPoint).ShouldBeGreaterThan(-1);
+                mapping.GetPointSourceArea(destPoint).IsSameAs(_sourceArea).ShouldBeTrue();
             }
 
             foreach (var point in _destArea.Points)
             {
-                Assert.That(mapping.DestPoints.Contains(point));
-                Assert.That(mapping.GetPointSourceArea(point).IsSameAs(_sourceArea));
+                mapping.DestPoints.Contains(point).ShouldBeTrue();
+                mapping.GetPointSourceArea(point).IsSameAs(_sourceArea).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Mapping_Where_Source_Areas_Contain_No_IgnoreArea()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -152,20 +151,20 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             {
                 var pointSourceArea = mapping.GetPointSourceArea(destPoint);
                 var intersection = pointSourceArea.Intersect(ignoreArea);
-                Assert.That(intersection.IsEmpty);
+                intersection.IsEmpty.ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Mapping_Where_Points_Outside_Mapping_Mapped_To_EmptyArea()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
             var mapping = _mapBuilder.Build();
 
-            Assert.That(mapping.GetPointSourceArea(new Point(-10, -10)).IsEmpty);
+            mapping.GetPointSourceArea(new Point(-10, -10)).IsEmpty.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Should_Not_Take_Into_Account_Donors_That_Point_To_Ignored_Area()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -186,17 +185,17 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             foreach (var destPoint in donor1Dest.Points)
             {
                 var pointSourceArea = mapping.GetPointSourceArea(destPoint);
-                Assert.That(!pointSourceArea.IsSameAs(donor1Source));
+                pointSourceArea.IsSameAs(donor1Source).ShouldBeFalse();
             }
 
             foreach (var destPoint in donor2Dest.Points)
             {
                 var pointSourceArea = mapping.GetPointSourceArea(destPoint);
-                Assert.That(!pointSourceArea.IsSameAs(donor2Source));
+                pointSourceArea.IsSameAs(donor2Source).ShouldBeFalse();
             }
         }
 
-        [Test]
+        [Fact]
         public void Should_Use_Only_Last_Set_IgnoreArea()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -220,17 +219,17 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             foreach (var destPoint in donor1Dest.Points)
             {
                 var pointSourceArea = mapping.GetPointSourceArea(destPoint);
-                Assert.That(pointSourceArea.IsSameAs(donor1Source));
+                pointSourceArea.IsSameAs(donor1Source).ShouldBeTrue();
             }
 
             foreach (var destPoint in donor2Dest.Points)
             {
                 var pointSourceArea = mapping.GetPointSourceArea(destPoint);
-                Assert.That(!pointSourceArea.IsSameAs(donor2Source));
+                pointSourceArea.IsSameAs(donor2Source).ShouldBeFalse();
             }
         }
 
-        [Test]
+        [Fact]
         public void Mapping_Source_Area_Should_Be_Same_As_Source_Area_But_Without_Last_Set_IgnoreArea()
         {
             _sourceArea = Area2D.Create(0, 0, 10, 10);
@@ -261,10 +260,10 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             var expectedSource = _sourceArea.Substract(ignoreArea2);
 
-            Assert.That(source.IsSameAs(expectedSource));
+            source.IsSameAs(expectedSource).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void All_Dest_Points_Of_Result_Must_Be_In_ReducedArea()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -284,11 +283,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var destPoint in mapping.DestPoints)
             {
-                Assert.That(reduceArea.Points.Contains(destPoint));
+                reduceArea.Points.Contains(destPoint).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void Dest_Points_Of_Result_Must_Be_In_Intersection_Of_ReducedAreas_And_Dest()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -315,11 +314,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var destPoint in mapping.DestPoints)
             {
-                Assert.That(finalReduceArea.Points.Contains(destPoint));
+                finalReduceArea.Points.Contains(destPoint).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void All_Points_Of_Intersection_Of_ReducedAreas_And_Dest_Must_Be_In_Result()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -346,11 +345,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 
             foreach (var point in finalReduceArea.Points)
             {
-                Assert.That(mapping.DestPoints.Contains(point));
+                mapping.DestPoints.Contains(point).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void DestPoints_That_Reside_In_Multiple_AssociatedAreas_Should_Point_To_The_Last_Added_Source_Area()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -370,12 +369,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             foreach (var point in commonDest.Points)
             {
                 var source = mapping.GetPointSourceArea(point);
-                Assert.That(source.IsSameAs(donor2Source));
+                source.IsSameAs(donor2Source).ShouldBeTrue();
             }
         }
 
-        [Test]
-        [Ignore("Wrong assumption, this area will point to the last added")]
+        [Fact(Skip = "Wrong assumption, this area will point to the last added")]
         public void DestPoints_That_Reside_In_Multiple_AssociatedAreas_Should_Point_To_Joint_Source_Area()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -396,11 +394,11 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             foreach (var point in commonDest.Points)
             {
                 var source = mapping.GetPointSourceArea(point);
-                Assert.That(source.IsSameAs(jointSource));
+                source.IsSameAs(jointSource).ShouldBeTrue();
             }
         }
 
-        [Test]
+        [Fact]
         public void DestPoints_That_Reside_Only_In_One_AssociatedAreas_Should_Point_To_Its_SourceArea()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
@@ -421,14 +419,14 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             foreach (var point in uniqueDest1.Points)
             {
                 var source = mapping.GetPointSourceArea(point);
-                Assert.That(source.IsSameAs(donor1Source));
+                source.IsSameAs(donor1Source).ShouldBeTrue();
             }
 
             var uniqueDest2 = commonDest.Substract(donor1Dest);
             foreach (var point in uniqueDest2.Points)
             {
                 var source = mapping.GetPointSourceArea(point);
-                Assert.That(source.IsSameAs(donor2Source));
+                source.IsSameAs(donor2Source).ShouldBeTrue();
             }
         }
     }

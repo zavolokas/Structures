@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
-using NUnit.Framework;
+using Shouldly;
+using Xunit;
 
 namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
 {
-    [TestFixture]
     public class WhenGetDestPoints
     {
-        [Test]
+        [Fact]
         public void Should_Contain_All_Points_From_Dest_Areas()
         {
             var srcArea = Area2D.Create(0, 0, 3, 3);
@@ -26,12 +26,12 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
                 var dest = areas[i].Item1;
                 foreach (var point in dest.Points)
                 {
-                    Assert.That(areaMap.DestPoints.Contains(point));
+                    areaMap.DestPoints.Contains(point).ShouldBeTrue();
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void Points_Area_Ordered_From_Left_To_Right_From_Top_To_Bottom()
         {
             var srcArea = Area2D.Create(0, 0, 3, 3);
@@ -49,13 +49,13 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
             foreach (var point in areaMap.DestPoints)
             {
                 var index = point.Y * 1000 + point.X;
-                Assert.That(index, Is.GreaterThan(prevIndex));
+                index.ShouldBeGreaterThan(prevIndex);
 
                 prevIndex = index;
             }
         }
 
-        [Test]
+        [Fact]
         public void Should_Not_Contain_Duplicated_Points_Even_When_Dest_Areas_Have_Common_Parts()
         {
             var srcArea = Area2D.Create(0, 0, 3, 3);
@@ -71,7 +71,7 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
             var result = areaMap.DestPoints;
             var noDuplicates = areaMap.DestPoints.Distinct();
 
-            Assert.That(result.SequenceEqual(noDuplicates));
+            result.SequenceEqual(noDuplicates).ShouldBeTrue();
         }
     }
 }

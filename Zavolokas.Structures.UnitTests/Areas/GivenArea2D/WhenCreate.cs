@@ -1,25 +1,24 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
-    [TestFixture]
     public class WhenCreate
     {
-        [Test]
+        [Fact]
         public void ShouldReturnArea()
         {
             var area = Area2D.Create(0, 0, 10, 10);
-
-            Assert.That(area, Is.TypeOf(typeof(Area2D)));
-            Assert.That(area.Bound.X, Is.EqualTo(0));
-            Assert.That(area.Bound.Y, Is.EqualTo(0));
-            Assert.That(area.Bound.Width, Is.EqualTo(10));
-            Assert.That(area.Bound.Height, Is.EqualTo(10));
-            Assert.That(area.IsEmpty, Is.False);
+            area.ShouldBeOfType<Area2D>();
+            area.Bound.X.ShouldBe(0);
+            area.Bound.Y.ShouldBe(0);
+            area.Bound.Width.ShouldBe(10);
+            area.Bound.Height.ShouldBe(10);
+            area.IsEmpty.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void ShouldCreateArea()
         {
             const int x = 3;
@@ -35,21 +34,21 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             var area = Area2D.Create(x, y, markup);
 
-            Assert.That(area, Is.TypeOf(typeof(Area2D)));
-            Assert.That(area.Bound.X, Is.EqualTo(3));
-            Assert.That(area.Bound.Y, Is.EqualTo(5));
-            Assert.That(area.Bound.Width, Is.EqualTo(4));
-            Assert.That(area.Bound.Height, Is.EqualTo(4));
-            Assert.That(area.ElementsCount, Is.EqualTo(10));
+            area.ShouldBeOfType<Area2D>();
+            area.Bound.X.ShouldBe(3);
+            area.Bound.Y.ShouldBe(5);
+            area.Bound.Width.ShouldBe(4);
+            area.Bound.Height.ShouldBe(4);
+            area.ElementsCount.ShouldBe(10);
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_ArgumentNullException_When_Markup_Is_Null()
         {
             const int x = 3;
             const int y = 5;
 
-            Assert.Throws<ArgumentNullException>(() => Area2D.Create(x, y, null));
+            Should.Throw<ArgumentNullException>(() => Area2D.Create(x, y, null));
         }
     }
 }

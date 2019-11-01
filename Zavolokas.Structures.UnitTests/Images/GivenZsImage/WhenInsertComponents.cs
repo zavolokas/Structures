@@ -1,12 +1,13 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
 {
-    [TestFixture]
     public class WhenInsertComponents
     {
-        [TestCase(
+        [Theory]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -14,8 +15,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3,    // width, height, numberOfComponents
             null, 1,       // components, positionIndex
-            ExpectedResult = typeof(ArgumentNullException))]
-        public Type Should_Throw_ArgumentNullException_When_Components_IsNull(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index)
+            typeof(ArgumentNullException))]
+        public void Should_Throw_ArgumentNullException_When_Components_IsNull(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index, Type expectedType)
         {
             var image = new ZsImage(pixels, width, height, componentsAmount);
 
@@ -28,10 +29,11 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             {
                 result = ex.GetType();
             }
-            return result;
+            result.ShouldBe(expectedType);
         }
 
-        [TestCase(
+        [Theory]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -39,8 +41,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3,    // width, height, numberOfComponents
             new double[] { }, 1,       // components, positionIndex
-            ExpectedResult = typeof(ArgumentOutOfRangeException))]
-        public Type Should_Throw_ArgumentOutOfRangeException_When_ComponentsLength_IsZero(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index)
+            typeof(ArgumentOutOfRangeException))]
+        public void Should_Throw_ArgumentOutOfRangeException_When_ComponentsLength_IsZero(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index, Type expectedType)
         {
             var image = new ZsImage(pixels, width, height, componentsAmount);
 
@@ -53,10 +55,11 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             {
                 result = ex.GetType();
             }
-            return result;
+            result.ShouldBe(expectedType);
         }
 
-        [TestCase(
+        [Theory]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -64,8 +67,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3,    // width, height, numberOfComponents
             new[] { 1.0 }, 4,       // components, positionIndex
-            ExpectedResult = typeof(ArgumentOutOfRangeException))]
-        [TestCase(
+            typeof(ArgumentOutOfRangeException))]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50,
@@ -73,8 +76,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 2,    // width, height, numberOfComponents
             new[] { 1.0 }, 3,       // components, positionIndex
-            ExpectedResult = typeof(ArgumentOutOfRangeException))]
-        public Type Should_Throw_ArgumentOutOfRangeException_Index_Greater_Than_Components_Amount(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index)
+            typeof(ArgumentOutOfRangeException))]
+        public void Should_Throw_ArgumentOutOfRangeException_Index_Greater_Than_Components_Amount(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index, Type expectedType)
         {
             var image = new ZsImage(pixels, width, height, componentsAmount);
 
@@ -87,11 +90,11 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             {
                 result = ex.GetType();
             }
-            return result;
+            result.ShouldBe(expectedType);
         }
 
-
-        [TestCase(
+        [Theory]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -99,9 +102,9 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3,    // width, height, numberOfComponents
             new[] { 1.0 }, 3,       // components, positionIndex
-            ExpectedResult = typeof(object))]
+            typeof(object))]
 
-        [TestCase(
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -109,9 +112,9 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3,    // width, height, numberOfComponents
             new[] { 0.0 }, 0,       // components, positionIndex
-            ExpectedResult = typeof(object))]
+            typeof(object))]
 
-        [TestCase(
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -119,9 +122,9 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3,    // width, height, numberOfComponents
             new[] { 0.5 }, 1,       // components, positionIndex
-            ExpectedResult = typeof(object))]
+            typeof(object))]
 
-        [TestCase(
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50,
@@ -129,8 +132,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 2,    // width, height, numberOfComponents
             new[] { 1.0 }, 2,       // components, positionIndex
-            ExpectedResult = typeof(object))]
-        public Type Should_Not_Throw_ArgumentOutOfRangeException(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index)
+            typeof(object))]
+        public void Should_Not_Throw_ArgumentOutOfRangeException(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index, Type expectedType)
         {
             var image = new ZsImage(pixels, width, height, componentsAmount);
 
@@ -143,10 +146,11 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             {
                 result = ex.GetType();
             }
-            return result;
+            result.ShouldBe(expectedType);
         }
 
-        [TestCase(
+        [Theory]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50,
@@ -154,8 +158,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 2, // width, height, numberOfComponents
             new[] { 1.0 }, 2, // components, positionIndex
-            ExpectedResult = 12)]
-        [TestCase(
+            12)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50,
@@ -163,8 +167,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 2, // width, height, numberOfComponents
             new[] { 1.0, 0.5, 0.3 }, 0, // components, positionIndex
-            ExpectedResult = 20)]
-        [TestCase(
+            20)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50, 0.50, 0.50,
@@ -172,8 +176,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3, // width, height, numberOfComponents
             new[] { 1.0 }, 0, // components, positionIndex
-            ExpectedResult = 16)]
-        [TestCase(
+            16)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50, 0.50, 0.50,
@@ -181,17 +185,17 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3, // width, height, numberOfComponents
             new[] { 1.0, 0.0 }, 0, // components, positionIndex
-            ExpectedResult = 20)]
-        public int Should_Increase_PixelsData_Array(double[] pixels, int width, int height, byte componentsAmount,
-            double[] components, byte position)
+            20)]
+        public void Should_Increase_PixelsData_Array(double[] pixels, int width, int height, byte componentsAmount,
+            double[] components, byte position, int result)
         {
             var image = new ZsImage(pixels, width, height, componentsAmount);
             image.InsertComponents(components, position);
-            return image.PixelsData.Length;
+            image.PixelsData.Length.ShouldBe(result);
         }
 
-
-        [TestCase(
+        [Theory]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50,
@@ -199,8 +203,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 2, // width, height, numberOfComponents
             new[] { 1.0 }, 2, // components, positionIndex
-            ExpectedResult = 3)]
-        [TestCase(
+            3)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50,
@@ -208,8 +212,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 2, // width, height, numberOfComponents
             new[] { 1.0, 1, 1 }, 0, // components, positionIndex
-            ExpectedResult = 5)]
-        [TestCase(
+            5)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50, 0.50, 0.50,
@@ -217,8 +221,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3, // width, height, numberOfComponents
             new[] { 1.0 }, 0, // components, positionIndex
-            ExpectedResult = 4)]
-        [TestCase(
+            4)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50, 0.50, 0.50,
@@ -226,17 +230,17 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3, // width, height, numberOfComponents
             new[] { 1.0, 0 }, 0, // components, positionIndex
-            ExpectedResult = 5)]
-        public int Should_Increase_NumberOfComponents(double[] pixels, int width, int height, byte componentsAmount,
-            double[] components, byte position)
+            5)]
+        public void Should_Increase_NumberOfComponents(double[] pixels, int width, int height, byte componentsAmount,
+            double[] components, byte position, byte result)
         {
             var image = new ZsImage(pixels, width, height, componentsAmount);
             image.InsertComponents(components, position);
-            return image.NumberOfComponents;
+            image.NumberOfComponents.ShouldBe(result);
         }
 
-
-        [TestCase(
+        [Theory]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50,
@@ -244,8 +248,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 2, // width, height, numberOfComponents
             new[] { 1.0 }, 2, // components, positionIndex
-            ExpectedResult = 6)]
-        [TestCase(
+            6)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50,
@@ -253,8 +257,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 2, // width, height, numberOfComponents
             new[] { 1.0, 1, 1 }, 0, // components, positionIndex
-            ExpectedResult = 10)]
-        [TestCase(
+            10)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50, 0.50, 0.50,
@@ -262,8 +266,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3, // width, height, numberOfComponents
             new[] { 1.0 }, 0, // components, positionIndex
-            ExpectedResult = 8)]
-        [TestCase(
+            8)]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00, 0.50, 0.50, 0.50,
@@ -271,16 +275,17 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
             },
             2, 2, 3, // width, height, numberOfComponents
             new[] { 1.0, 0 }, 0, // components, positionIndex
-            ExpectedResult = 10)]
-        public int Should_Increase_Stride(double[] pixels, int width, int height, byte componentsAmount,
-            double[] components, byte position)
+            10)]
+        public void Should_Increase_Stride(double[] pixels, int width, int height, byte componentsAmount,
+            double[] components, byte position, int result)
         {
             var image = new ZsImage(pixels, width, height, componentsAmount);
             image.InsertComponents(components, position);
-            return image.Stride;
+            image.Stride.ShouldBe(result);
         }
 
-        [TestCase(
+        [Theory]
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -293,9 +298,9 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
                 1.00, 1.00, 1.00, 1.00,  1.00, 0.50, 0.50, 0.50,
                 1.00, 0.25, 0.25, 0.25,  1.00, 0.125, 0.125, 0.125
             },
-            ExpectedResult = true)]
+            true)]
 
-        [TestCase(
+        [InlineData(
             new[]
             {
                 1.00, 2.00, 3.00,  4.50, 5.50, 6.50,
@@ -308,9 +313,9 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
                 0, 1.00, 2.00, 3.00,  0, 4.50, 5.50, 6.50,
                 0, 7.25, 8.25, 9.25,  0, 10.125, 11.125, 12.125
             },
-            ExpectedResult = true)]
+            true)]
 
-        [TestCase(
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -323,9 +328,9 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
                 1.00, 1.00, 1.00, 1.00,  0.50, 1.00, 0.50, 0.50,
                 0.25, 1.00, 0.25, 0.25,  0.125, 1.00, 0.125, 0.125
             },
-            ExpectedResult = true)]
+            true)]
 
-        [TestCase(
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -338,9 +343,9 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
                 1.00, 1.00, 1.00, 1.00,   0.50, 0.50, 0.50, 1.00,
                 0.25, 0.25, 0.25, 1.00,   0.125, 0.125, 0.125, 1.00
             },
-            ExpectedResult = true)]
+            true)]
 
-        [TestCase(
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -353,9 +358,9 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
                 1.00, 0.50, 0.30, 1.00, 1.00,   0.50, 0.50, 0.30, 0.50, 0.50,
                 0.25, 0.50, 0.30, 0.25, 0.25,   0.125, 0.50, 0.30, 0.125, 0.125
             },
-            ExpectedResult = true)]
+            true)]
 
-        [TestCase(
+        [InlineData(
             new[]
             {
                 1.00, 1.00, 1.00,  0.50, 0.50, 0.50,
@@ -368,8 +373,8 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
                 1.00, 1.00, 0.10, 0.50, 0.30, 1.00,   0.50, 0.50, 0.10, 0.50, 0.30, 0.50,
                 0.25, 0.25, 0.10, 0.50, 0.30, 0.25,   0.125, 0.125, 0.10, 0.50, 0.30, 0.125
             },
-            ExpectedResult = true)]
-        public bool Should_Insert_Provided_Values(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index, double[] result)
+            true)]
+        public void Should_Insert_Provided_Values(double[] pixels, int width, int height, byte componentsAmount, double[] components, byte index, double[] result, bool expected)
         {
             var image = new ZsImage(pixels, width, height, componentsAmount);
             image.InsertComponents(components, index);
@@ -383,7 +388,7 @@ namespace Zavolokas.Structures.UnitTests.Images.GivenZsImage
                     equal = false;
             }
 
-            return equal;
+            equal.ShouldBe(expected);
         }
     }
 }

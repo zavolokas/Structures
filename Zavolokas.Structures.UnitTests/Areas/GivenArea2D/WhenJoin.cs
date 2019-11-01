@@ -4,40 +4,40 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using NUnit.Framework;
 using Zavolokas.Math.Combinatorics;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
-    [TestFixture]
     public class WhenJoin
     {
-        [Test]
+        [Fact]
         public void Result_Should_Throw_ArgumentNullException_When_Area_Is_Null()
         {
             var areaA = Area2D.Create(14, 10, 44, 15);
-            Assert.Throws<ArgumentNullException>(() => areaA.Join(null));
+            Should.Throw<ArgumentNullException>(() => areaA.Join(null));
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Be_Equal_To_Initial_Area_When_Join_With_Empty_Area()
         {
             var area = Area2D.Create(14, 10, 44, 15);
             var emptyArea = Area2D.Create(0, 0, 0, 0);
             var joinedArea = area.Join(emptyArea);
-            Assert.That(joinedArea.IsSameAs(area));
+            joinedArea.IsSameAs(area).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Be_Equal_To_Joined_Area_When_Join_With_Empty_Area()
         {
             var area = Area2D.Create(14, 10, 44, 15);
             var emptyArea = Area2D.Create(0, 0, 0, 0);
             var joinedArea = emptyArea.Join(area);
-            Assert.That(joinedArea.IsSameAs(area));
+            joinedArea.IsSameAs(area).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Contain_Points_From_Both_Areas()
         {
             var areaA = Area2D.Create(0, 0, 10, 10);
@@ -47,18 +47,19 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             foreach (var point in areaA.Points)
             {
-                Assert.That(result.GetPointIndex(point) > -1);
+                result.GetPointIndex(point).ShouldBeGreaterThan(-1);
             }
 
             foreach (var point in areaB.Points)
             {
-                Assert.That(result.GetPointIndex(point) > -1);
+                result.GetPointIndex(point).ShouldBeGreaterThan(-1);
             }
         }
 
-        [TestCase("256x128", "AreaJoinTest", ExpectedResult = true)]
-        [Ignore("Don't know yet how to handle this properly on Travis CI")]
-        public bool Should_Intersect_Areas(string size, string testName)
+        [Theory]
+        [InlineData("256x128", "AreaJoinTest", true)]
+        //[Ignore("Don't know yet how to handle this properly on Travis CI")]
+        public void Should_Intersect_Areas(string size, string testName, bool result)
         {
             var noDiffs = true;
             var ts = TestSet.Init(size);
@@ -115,7 +116,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 if (!refArea.IsSameAs(outArea)) noDiffs = false;
             }
 
-            return noDiffs;
+            noDiffs.ShouldBe(result);
         }
 
         private static void SaveToOutput(Area2D area, string fileName, string testName, string testPath)

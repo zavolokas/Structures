@@ -9,5 +9,5 @@ using System.Runtime.InteropServices;
 #if DEBUG
 //[assembly: InternalsVisibleTo("Rhino.Mocks")]
 //-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
-//[assembly: InternalsVisibleTo("Zavolokas.Structures.UnitTests")]//", PublicKey=80b59e5d7d597824")]
+[assembly: InternalsVisibleTo("Zavolokas.Structures.UnitTests")]//", PublicKey=80b59e5d7d597824")]
 #endif

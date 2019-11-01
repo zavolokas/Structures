@@ -1,47 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
 {
-    [TestFixture]
     public class WhenCtor
     {
-        [Test]
+        [Fact]
         public void Should_Throw_ArgumentNullException_Areas_Are_Null()
         {
             Tuple<Area2D, Area2D>[] areas = null;
-            Assert.Throws<ArgumentNullException>(() => new Area2DMap(areas, Area2D.Empty));
+            Should.Throw<ArgumentNullException>(() => new Area2DMap(areas, Area2D.Empty));
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_ArgumentNullException_When_OutsideArea_Is_Null()
         {
             Area2D srcArea = Area2D.Create(5, 5, 10, 10);
             Area2D destArea = Area2D.Create(0, 0, 3, 3);
             var areas = new[] { new Tuple<Area2D, Area2D>(destArea, srcArea) };
 
-            Assert.Throws<ArgumentNullException>(() => new Area2DMap(areas, null));
+            Should.Throw<ArgumentNullException>(() => new Area2DMap(areas, null));
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_ArgumentNullException_When_Dest_Area_Is_Null()
         {
             var srcArea = Area2D.Create(0, 0, 3, 3);
             Area2D destArea = null;
             var areas = new[] { new Tuple<Area2D, Area2D>(destArea, srcArea) };
-            Assert.Throws<ArgumentNullException>(() => new Area2DMap(areas, Area2D.Empty));
+            Should.Throw<ArgumentNullException>(() => new Area2DMap(areas, Area2D.Empty));
         }
 
-        [TestCaseSource(nameof(GetAreasWithNullDestArea))]
-        [TestCaseSource(nameof(GetAreasWithNullSourceArea))]
-        public void Should_Throw_ArgumentNullException_When_Source_Or_Dest_Area_Is_Null(int a, Tuple<Area2D, Area2D>[] areas, Area2D emptyArea)
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        public void Should_Throw_ArgumentNullException_When_Source_Or_Dest_Area_Is_Null(int ind)
         {
-            Assert.Throws<ArgumentNullException>(() => new Area2DMap(areas, emptyArea));
+            var data = GetAreasWithNullSourceArea()[ind];
+            int a = data.Item1;
+            Tuple<Area2D, Area2D>[] areas = data.Item2;
+            Area2D emptyArea = data.Item3;
+
+            Should.Throw<ArgumentNullException>(() => new Area2DMap(areas, emptyArea));
         }
 
-        public static IEnumerable<TestCaseData> GetAreasWithNullSourceArea()
+        public static Tuple<int, Tuple<Area2D,Area2D>[],Area2D>[] GetAreasWithNullSourceArea()
         {
+            var data = new List<Tuple<int, Tuple<Area2D, Area2D>[], Area2D>>();
+
             Area2D srcArea = Area2D.Create(5, 5, 10, 10);
             Area2D destArea = Area2D.Create(0, 0, 3, 3);
             Area2D emptyArea = Area2D.Empty;
@@ -50,14 +62,14 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
             {
                 new Tuple<Area2D, Area2D>(destArea, null),
             };
-            yield return new TestCaseData(1, areas, emptyArea);
+            data.Add(new Tuple<int, Tuple<Area2D, Area2D>[], Area2D>(1, areas, emptyArea));
 
             areas = new[]
             {
                 new Tuple<Area2D, Area2D>(destArea, srcArea),
                 new Tuple<Area2D, Area2D>(destArea, null)
             };
-            yield return new TestCaseData(1, areas, emptyArea);
+            data.Add(new Tuple<int, Tuple<Area2D, Area2D>[], Area2D>(1, areas, emptyArea));
 
             areas = new[]
             {
@@ -65,55 +77,25 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
                 new Tuple<Area2D, Area2D>(destArea, null),
                 new Tuple<Area2D, Area2D>(destArea, srcArea),
             };
-            yield return new TestCaseData(1, areas, emptyArea);
-        }
+            data.Add(new Tuple<int, Tuple<Area2D, Area2D>[], Area2D>(1, areas, emptyArea));
 
-        public static IEnumerable<TestCaseData> GetAreasWithEmptySourceArea()
-        {
-            Area2D emptyArea = Area2D.Empty;
-            Area2D srcArea = Area2D.Create(5, 5, 10, 10);
-            Area2D destArea = Area2D.Create(0, 0, 3, 3);
 
-            var areas = new[]
-            {
-                new Tuple<Area2D, Area2D>(destArea, emptyArea),
-            };
-            yield return new TestCaseData(1, areas, emptyArea);
+            srcArea = Area2D.Create(5, 5, 10, 10);
+            destArea = Area2D.Create(0, 0, 3, 3);
+            emptyArea = Area2D.Empty;
 
             areas = new[]
-            {
-                new Tuple<Area2D, Area2D>(destArea, srcArea),
-                new Tuple<Area2D, Area2D>(destArea, emptyArea)
-            };
-            yield return new TestCaseData(1, areas, emptyArea);
-
-            areas = new[]
-            {
-                new Tuple<Area2D, Area2D>(destArea, srcArea),
-                new Tuple<Area2D, Area2D>(destArea, emptyArea),
-                new Tuple<Area2D, Area2D>(destArea, srcArea),
-            };
-            yield return new TestCaseData(1, areas, emptyArea);
-        }
-
-        public static IEnumerable<TestCaseData> GetAreasWithNullDestArea()
-        {
-            Area2D srcArea = Area2D.Create(5, 5, 10, 10);
-            Area2D destArea = Area2D.Create(0, 0, 3, 3);
-            Area2D emptyArea = Area2D.Empty;
-
-            var areas = new[]
             {
                 new Tuple<Area2D, Area2D>(null, srcArea),
             };
-            yield return new TestCaseData(1, areas, emptyArea);
+            data.Add(new Tuple<int, Tuple<Area2D, Area2D>[], Area2D>(1, areas, emptyArea));
 
             areas = new[]
             {
                 new Tuple<Area2D, Area2D>(destArea, srcArea),
                 new Tuple<Area2D, Area2D>(null, srcArea)
             };
-            yield return new TestCaseData(1, areas, emptyArea);
+            data.Add(new Tuple<int, Tuple<Area2D, Area2D>[], Area2D>(1, areas, emptyArea));
 
             areas = new[]
             {
@@ -121,35 +103,9 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
                 new Tuple<Area2D, Area2D>(null, srcArea),
                 new Tuple<Area2D, Area2D>(destArea, srcArea),
             };
-            yield return new TestCaseData(1, areas, emptyArea);
-        }
+            data.Add(new Tuple<int, Tuple<Area2D, Area2D>[], Area2D>(1, areas, emptyArea));
 
-        public static IEnumerable<TestCaseData> GetAreasWithEmptyDestArea()
-        {
-            Area2D srcArea = Area2D.Create(5, 5, 10, 10);
-            Area2D destArea = Area2D.Create(0, 0, 3, 3);
-            Area2D emptyArea = Area2D.Empty;
-
-            var areas = new[]
-            {
-                new Tuple<Area2D, Area2D>(emptyArea, srcArea),
-            };
-            yield return new TestCaseData(1, areas, emptyArea);
-
-            areas = new[]
-            {
-                new Tuple<Area2D, Area2D>(destArea, srcArea),
-                new Tuple<Area2D, Area2D>(emptyArea, srcArea)
-            };
-            yield return new TestCaseData(1, areas, emptyArea);
-
-            areas = new[]
-            {
-                new Tuple<Area2D, Area2D>(destArea, srcArea),
-                new Tuple<Area2D, Area2D>(emptyArea, srcArea),
-                new Tuple<Area2D, Area2D>(destArea, srcArea),
-            };
-            yield return new TestCaseData(1, areas, emptyArea);
+            return data.ToArray();
         }
     }
 }

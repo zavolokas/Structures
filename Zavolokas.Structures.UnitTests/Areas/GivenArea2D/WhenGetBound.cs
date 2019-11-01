@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
+﻿using Shouldly;
+using Xunit;
 
 namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
-    [TestFixture]
     public class WhenGetBound
     {
-        [Test]
+        [Fact]
         public void Area2D_Bounds_Test_1()
         {
-            var markup = new []
+            var markup = new[]
             {
                 new byte[] { 0,0,0,0,0,0,0,0,0},
                 new byte[] { 0,0,1,0,1,1,0,0,1},
@@ -27,13 +27,13 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Bounds_Test_2()
         {
-            var markup = new []
+            var markup = new[]
             {
                 new byte[] { 1,0,1,1,0,0,1},
                 new byte[] { 1,1,0,0,1,1,1},
@@ -51,13 +51,13 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Bounds_Test_3()
         {
-            var markup = new []
+            var markup = new[]
             {
                 new byte[] {0,0,0,0,0,0,0,0},
                 new byte[] {0,1,0,1,1,0,0,1},
@@ -75,13 +75,13 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Bounds_Test_4()
         {
-            var markup = new []
+            var markup = new[]
             {
                 new byte[] {0,0,0,0,0,0,0,0},
                 new byte[] {0,1,0,1,1,0,0,1},
@@ -99,10 +99,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Bounds_Test_5()
         {
             var expected = new Rectangle(1, 1, 5, 3);
@@ -113,10 +113,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Bounds_Test_6()
         {
             var expected = new Rectangle(0, 0, 4, 2);
@@ -127,7 +127,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
     }
 }
