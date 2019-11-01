@@ -6,6 +6,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
     public class WhenGetIndexOfPoint
     {
+        [Theory]
         [InlineData(0, 0,
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 1, 1, 0, 0, 0, 0, 0 },
@@ -77,6 +78,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
             area.GetPointIndex(point).ShouldBe(result);
         }
 
+        [Theory]
         [InlineData(0, 0, 5, 5, 0, 0, 0)]
         [InlineData(2, 3, 2, 2, 2, 3, 0)]
         [InlineData(5, -2, 2, 3, 5, -2, 0)]
