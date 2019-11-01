@@ -102,9 +102,8 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
         }
 
         [Theory]
-        [InlineData("256x128", "AreaIntersectionTest", true)]
+        [InlineData("256x128", "AreaIntersectionTest", true, Skip = "Don't know yet how to handle this properly on Travis CI")]
         //[TestCase("1280x720", "AreaIntersectionTest", ExpectedResult = true)]
-        //[Ignore("Don't know yet how to handle this properly on Travis CI")]
         public void Should_Intersect_Areas(string size, string testName, bool result)
         {
             var noDiffs = true;
