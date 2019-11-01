@@ -10,7 +10,7 @@ steps:
         from_secret: NUGET_KEY
     commands:
       - dotnet build Zavolokas.Structures -c Release
-      - dotnet test
+      - dotnet test Zavolokas.Structures.UnitTests
     when:
       event: [push]
 
