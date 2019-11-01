@@ -4,15 +4,15 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using NUnit.Framework;
 using Zavolokas.Math.Combinatorics;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
-    [TestFixture]
     public class WhenSubstract
     {
-        [Test]
+        [Fact]
         public void Should_Return_Empty_Area_When_Substract_From_Empty_Area()
         {
             var areaA = Area2D.Empty;
@@ -20,10 +20,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             var a = areaA.Substract(areaB);
 
-            Assert.That(a.IsEmpty, Is.True);
+            a.IsEmpty.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Same_Area_When_Substract_Empty_Area()
         {
             var areaA = Area2D.Create(0, 0, 10, 10);
@@ -31,10 +31,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             var a = areaA.Substract(areaB);
 
-            Assert.That(a.IsSameAs(areaA), Is.True);
+            a.IsSameAs(areaA).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Same_Area_When_Areas_Dont_Intersect()
         {
             var areaA = Area2D.Create(-2, -2, 2, 2);
@@ -42,10 +42,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             var a = areaA.Substract(areaB);
 
-            Assert.That(a.IsSameAs(areaA), Is.True);
+            a.IsSameAs(areaA).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Intersection()
         {
             var areaA = Area2D.Create(0, 0, 3, 3);
@@ -62,10 +62,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             var b = Area2D.Create(0, 0, points);
 
-            Assert.That(a.IsSameAs(b), Is.True);
+            a.IsSameAs(b).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Empty_Area_When_Areas_Are_Same()
         {
             var areaA = Area2D.Create(3, 3, 100, 100);
@@ -73,10 +73,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             var a = areaA.Substract(areaB);
 
-            Assert.That(a.IsEmpty, Is.True);
+            a.IsEmpty.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Should_Return_Empty_Area_When_Substracted_Area_Is_Subset()
         {
             var areaA = Area2D.Create(3, 3, 100, 100);
@@ -84,19 +84,19 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 
             var a = areaA.Substract(areaB);
 
-            Assert.That(a.IsEmpty, Is.True);
+            a.IsEmpty.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Throw_ArgumentNullException_When_Area_Is_Null()
         {
             var areaA = Area2D.Create(14, 10, 44, 15);
             Assert.Throws<ArgumentNullException>(() => areaA.Intersect(null));
         }
 
-        [TestCase("256x128", "AreaSubstractTest", ExpectedResult = true)]
-        [Ignore("Don't know yet how to handle this properly on Travis CI")]
-        public bool Should_Intersect_Areas(string size, string testName)
+        [Theory]
+        [InlineData("256x128", "AreaSubstractTest", true, Skip = "Don't know yet how to handle this properly on Travis CI")]
+        public void Should_Intersect_Areas(string size, string testName, bool result)
         {
             var noDiffs = true;
             var ts = TestSet.Init(size);
@@ -153,7 +153,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 if (!refArea.IsSameAs(outArea)) noDiffs = false;
             }
 
-            return noDiffs;
+            noDiffs.ShouldBe(result);
         }
 
         private static void SaveToOutput(Area2D area, string fileName, string testName, string testPath)

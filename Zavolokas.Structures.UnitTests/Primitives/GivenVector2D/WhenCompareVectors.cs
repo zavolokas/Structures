@@ -1,63 +1,63 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 {
-   [TestFixture]
-   public class WhenCompareVectors
-   {
-      [Test]
-      public void RightShouldBeGreater()
-      {
-         var v1 = new Vector2D(1, 1);
-         var v2 = new Vector2D(2, 2);
-         
-         Assert.IsTrue(v1 < v2);
-      }
+    public class WhenCompareVectors
+    {
+        [Fact]
+        public void RightShouldBeGreater()
+        {
+            var v1 = new Vector2D(1, 1);
+            var v2 = new Vector2D(2, 2);
+
+            v1.ShouldBeLessThan(v2);
+        }
 
 
-      [Test]
-      public void LeftShouldBeGreater()
-      {
-         var v1 = new Vector2D(1, 5);
-         var v2 = new Vector2D(2, 2);
+        [Fact]
+        public void LeftShouldBeGreater()
+        {
+            var v1 = new Vector2D(1, 5);
+            var v2 = new Vector2D(2, 2);
 
-         Assert.IsTrue(v1 > v2);
-      }
+            v1.ShouldBeGreaterThan(v2);
+        }
 
-      [Test]
-      public void ShouldBeEqual()
-      {
-         var v1 = new Vector2D(1, 5);
-         var v2 = new Vector2D(1, 5);
+        [Fact]
+        public void ShouldBeEqual()
+        {
+            var v1 = new Vector2D(1, 5);
+            var v2 = new Vector2D(1, 5);
 
-         Assert.IsTrue(v1 == v2);
-      }
+            (v1 == v2).ShouldBeTrue();
+        }
 
-      [Test]
-      public void ShouldBeNotEqual()
-      {
-         var v1 = new Vector2D(2, 5);
-         var v2 = new Vector2D(1, 2);
+        [Fact]
+        public void ShouldBeNotEqual()
+        {
+            var v1 = new Vector2D(2, 5);
+            var v2 = new Vector2D(1, 2);
 
-         Assert.IsFalse(v1 == v2);
-      }
+            (v1 == v2).ShouldBeFalse();
+        }
 
-      [Test]
-      public void ShouldBeNotEqual2()
-      {
-         var v1 = new Vector2D(2, 5);
-         var v2 = new Vector2D(1, 5);
+        [Fact]
+        public void ShouldBeNotEqual2()
+        {
+            var v1 = new Vector2D(2, 5);
+            var v2 = new Vector2D(1, 5);
 
-         Assert.IsTrue(v1 != v2);
-      }
+            (v1 != v2).ShouldBeTrue();
+        }
 
-      [Test]
-      public void ShouldBeEqual2()
-      {
-         var v1 = new Vector2D(2, 5);
-         var v2 = new Vector2D(2, 5);
+        [Fact]
+        public void ShouldBeEqual2()
+        {
+            var v1 = new Vector2D(2, 5);
+            var v2 = new Vector2D(2, 5);
 
-         Assert.IsFalse(v1 != v2);
-      }
-   }
+            (v1 != v2).ShouldBeFalse();
+        }
+    }
 }

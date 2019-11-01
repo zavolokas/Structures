@@ -1,53 +1,55 @@
 using System;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
-    [TestFixture]
     public class WhenGetPointByIndex
     {
-        [Test]
+        [Fact]
         public void Should_Throw_OutOfRangeException_When_Negative_Index2()
         {
             var area = Area2D.Create(0, 0, 5, 5);
             Assert.Throws<IndexOutOfRangeException>(() => { var p = area[-1]; });
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_OutOfRangeException_When_Index_Greater_Than_ElementsCount2()
         {
             var area = Area2D.Create(0, 0, 5, 5);
             Assert.Throws<IndexOutOfRangeException>(() => { var p = area[30]; });
         }
 
-        [TestCase(0, 0, 5, 5, 0, ExpectedResult = 0)]
-        [TestCase(2, 3, 2, 2, 0, ExpectedResult = 2)]
-        [TestCase(-5, 2, 2, 3, 0, ExpectedResult = -5)]
-        [TestCase(0, 0, 5, 5, 24, ExpectedResult = 4)]
-        [TestCase(2, 3, 2, 2, 3, ExpectedResult = 3)]
-        [TestCase(-5, 2, 2, 3, 5, ExpectedResult = -4)]
-        [TestCase(-1, 2, 3, 3, 8, ExpectedResult = 1)]
-        public int X_Coordinate_Of_Point_Should_Be_Correct(int x, int y, int width, int height, int index)
+        [Theory]
+        [InlineData(0, 0, 5, 5, 0,  0)]
+        [InlineData(2, 3, 2, 2, 0,  2)]
+        [InlineData(-5, 2, 2, 3, 0,  -5)]
+        [InlineData(0, 0, 5, 5, 24,  4)]
+        [InlineData(2, 3, 2, 2, 3,  3)]
+        [InlineData(-5, 2, 2, 3, 5,  -4)]
+        [InlineData(-1, 2, 3, 3, 8,  1)]
+        public void X_Coordinate_Of_Point_Should_Be_Correct(int x, int y, int width, int height, int index, int result)
         {
             var area = Area2D.Create(x, y, width, height);
-            return area[index].X;
+            area[index].X.ShouldBe(result);
         }
 
-        [TestCase(0, 0, 5, 5, 0, ExpectedResult = 0)]
-        [TestCase(2, 3, 2, 2, 0, ExpectedResult = 3)]
-        [TestCase(5, -2, 2, 3, 0, ExpectedResult = -2)]
-        [TestCase(0, 0, 5, 5, 24, ExpectedResult = 4)]
-        [TestCase(2, 3, 2, 2, 3, ExpectedResult = 4)]
-        [TestCase(5, -5, 2, 3, 5, ExpectedResult = -3)]
-        [TestCase(1, -1, 3, 3, 8, ExpectedResult = 1)]
-        public int Y_Coordinate_Of_Point_Should_Be_Correct(int x, int y, int width, int height, int index)
+        [Theory]
+        [InlineData(0, 0, 5, 5, 0,  0)]
+        [InlineData(2, 3, 2, 2, 0,  3)]
+        [InlineData(5, -2, 2, 3, 0,  -2)]
+        [InlineData(0, 0, 5, 5, 24,  4)]
+        [InlineData(2, 3, 2, 2, 3,  4)]
+        [InlineData(5, -5, 2, 3, 5,  -3)]
+        [InlineData(1, -1, 3, 3, 8,  1)]
+        public void Y_Coordinate_Of_Point_Should_Be_Correct(int x, int y, int width, int height, int index, int result)
         {
             var area = Area2D.Create(x, y, width, height);
-            return area[index].Y;
+            area[index].Y.ShouldBe(result);
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_OutOfRangeException_When_Negative_Index()
         {
             var markup = new[]
@@ -62,7 +64,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
             Assert.Throws<IndexOutOfRangeException>(() => { var p = area[-1]; });
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_OutOfRangeException_When_Index_Greater_Than_ElementsCount()
         {
             var markup = new[]
@@ -78,118 +80,120 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
             Assert.Throws<IndexOutOfRangeException>(() => { var p = area[40]; });
         }
 
-        [TestCase(0, 0,
+        [Theory]
+        [InlineData(0, 0,
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 1, 1, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 1, 1, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   0,
-            ExpectedResult = 1)]
-        [TestCase(0, 0,
+             1)]
+        [InlineData(0, 0,
                   new byte[] { 1, 1, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 1, 1, 1, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
             4,
-            ExpectedResult = 2)]
-        [TestCase(0, 0,
+             2)]
+        [InlineData(0, 0,
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
             11,
-            ExpectedResult = 3)]
-        [TestCase(-2, -3,
+             3)]
+        [InlineData(-2, -3,
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 1, 1, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 1, 1, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   0,
-            ExpectedResult = -1)]
-        [TestCase(3, 3,
+             -1)]
+        [InlineData(3, 3,
                   new byte[] { 1, 1, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 1, 1, 1, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
             4,
-            ExpectedResult = 5)]
-        [TestCase(-1, 0,
+             5)]
+        [InlineData(-1, 0,
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
             11,
-            ExpectedResult = 2)]
-        public int X_Coordinate_Of_Point_Should_Be_Correct(int x, int y, byte[] r1, byte[] r2, byte[] r3, byte[] r4, byte[] r5, int index)
+             2)]
+        public void X_Coordinate_Of_Point_Should_Be_Correct2(int x, int y, byte[] r1, byte[] r2, byte[] r3, byte[] r4, byte[] r5, int index, int result)
         {
             var markup = new[] { r1, r2, r3, r4, r5 };
             var area = Area2D.Create(x, y, markup);
-            return area[index].X;
+            area[index].X.ShouldBe(result);
         }
 
-        [TestCase(0, 0,
+        [Theory]
+        [InlineData(0, 0,
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 1, 1, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 1, 1, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   0,
-            ExpectedResult = 1)]
-        [TestCase(0, 0,
+             1)]
+        [InlineData(0, 0,
                   new byte[] { 1, 1, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 1, 1, 1, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 1, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
             5,
-            ExpectedResult = 3)]
-        [TestCase(0, 0,
+             3)]
+        [InlineData(0, 0,
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
             11,
-            ExpectedResult = 1)]
-        [TestCase(-2, -1,
+             1)]
+        [InlineData(-2, -1,
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 1, 1, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 1, 1, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   0,
-            ExpectedResult = 0)]
-        [TestCase(1, 3,
+             0)]
+        [InlineData(1, 3,
                   new byte[] { 1, 1, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 1, 1, 1, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 1, 0, 0, 0, 0, 0, 0 },
                   new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
             5,
-            ExpectedResult = 6)]
-        [TestCase(0, 2,
+             6)]
+        [InlineData(0, 2,
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
                   new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 },
             11,
-            ExpectedResult = 3)]
+             3)]
 
-        public int Y_Coordinate_Of_Point_Should_Be_Correct(int x, int y, byte[] r1, byte[] r2, byte[] r3, byte[] r4, byte[] r5, int index)
+        public void Y_Coordinate_Of_Point_Should_Be_Correct2(int x, int y, byte[] r1, byte[] r2, byte[] r3, byte[] r4, byte[] r5, int index, int result)
         {
             var markup = new[] { r1, r2, r3, r4, r5 };
             var area = Area2D.Create(x, y, markup);
-            return area[index].Y;
+            area[index].Y.ShouldBe(result);
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Indexer_When_Rect_Ctor_Used()
         {
             var isFailed = false;
@@ -235,10 +239,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 }
             }
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Indexer_When_Markup_Ctor_Used()
         {
             bool isFailed = false;
@@ -285,10 +289,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 }
             }
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Indexer_When_Markup_Ctor_Used_Not_In_Zero_Pos()
         {
             var isFailed = false;
@@ -348,10 +352,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 }
             }
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Indexer_When_Markup_Ctor_Used_Not_At_Zero_Pos2()
         {
             bool isFailed = false;
@@ -412,10 +416,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 }
             }
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Area2D_Indexer_When_Markup_Ctor_Used_Not_In_Negative_Position()
         {
             var isFailed = false;
@@ -449,7 +453,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 }
             }
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
     }
 }

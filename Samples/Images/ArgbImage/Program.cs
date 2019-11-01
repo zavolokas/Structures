@@ -16,7 +16,7 @@ namespace ArgbImage
     {
         static void Main(string[] args)
         {
-            const string basePath = "..\\..\\..\\..\\..\\images";
+            const string basePath = "..\\..\\..\\..\\..\\..\\images";
 
             using (var bitmap = new Bitmap(Path.Combine(basePath, "pm2.png")))
             using (var markup = new Bitmap(Path.Combine(basePath, "pm2_m.png")))
@@ -29,7 +29,7 @@ namespace ArgbImage
                     .SetComponentsValues(opaqueArea, new[] { 0.5 }, 0)
                     .FromArgbToRgb(new[] { 0.5, 0.3, 0.8 })   // converts the semi-transparent image into opaque applying bg color.
                     .FromRgbToBitmap()
-                    .SaveTo("..\\..\\out.png", ImageFormat.Png)
+                    .SaveTo("..\\..\\..\\out.png", ImageFormat.Png)
                     .ShowFile();
             }
         }

@@ -11,7 +11,7 @@ namespace ScaleUpImage
     {
         static void Main(string[] args)
         {
-            const string basePath = "..\\..\\..\\..\\..\\images";
+            const string basePath = "..\\..\\..\\..\\..\\..\\images";
 
             var bitmap = new Bitmap(Path.Combine(basePath, "t009.jpg"));
             var image = bitmap.ToRgbImage()
@@ -30,7 +30,7 @@ namespace ScaleUpImage
             image
                 .FromLabToRgb()
                 .FromRgbToBitmap()
-                .SaveTo(@"..\..\out.png", ImageFormat.Png)
+                .SaveTo(@"..\..\..\out.png", ImageFormat.Png)
                 .ShowFile();
         }
     }

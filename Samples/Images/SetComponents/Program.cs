@@ -11,7 +11,7 @@ namespace SetComponents
     {
         static void Main(string[] args)
         {
-            const string basePath = "..\\..\\..\\..\\..\\images";
+            const string basePath = "..\\..\\..\\..\\..\\..\\images";
             using (var bitmap = new Bitmap(Path.Combine(basePath, "pm2.png")))
             using (var mask2Bmp = new Bitmap(Path.Combine(basePath, "m007.png")))
             {
@@ -33,7 +33,7 @@ namespace SetComponents
                     .SetComponentsValues(grect, new[] { 1.0, 1.0, 1.0 }, 0)
                     .SetComponentsValues(mask0, new[] { 1.0, 1.0, 1.0 }, 0)
                     .FromRgbToBitmap()
-                    .SaveTo("..\\..\\output.png", ImageFormat.Png)
+                    .SaveTo("..\\..\\..\\output.png", ImageFormat.Png)
                     .ShowFile();
             }
         }

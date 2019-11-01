@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 {
-    [TestFixture]
     public class WhenGetVectorSquaredLength
     {
-        [Test]
+        [Fact]
         public void ShouldReturnSquaredLength()
         {
             const double x = -2;
@@ -13,11 +13,11 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var v1 = new Vector2D(x, y);
 
-            Assert.AreEqual(x * x + y * y, v1.SquareLength);
+            v1.SquareLength.ShouldBe(x * x + y * y);
         }
 
 
-        [Test]
+        [Fact]
         public void ShouldReturnSquaredLength2()
         {
             const double x = 3;
@@ -25,7 +25,7 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var v1 = new Vector2D(x, y);
 
-            Assert.AreEqual(x * x + y * y, v1.SquareLength);
+            v1.SquareLength.ShouldBe(x * x + y * y);
         }
     }
 }

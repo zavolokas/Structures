@@ -14,7 +14,7 @@ namespace Trancparancy
     {
         static void Main(string[] args)
         {
-            const string basePath = "..\\..\\..\\..\\..\\images";
+            const string basePath = "..\\..\\..\\..\\..\\..\\images";
 
             using (var bitmap = new Bitmap(Path.Combine(basePath, "pm2.png")))
             using (var markup = new Bitmap(Path.Combine(basePath, "pm2_m.png")))
@@ -27,12 +27,12 @@ namespace Trancparancy
                     .SetComponentsValues(opaqueArea, new[] { 1.0 }, 0);
 
                 bmp.FromArgbToBitmap()
-                    .SaveTo("..\\..\\argb.png", ImageFormat.Png);
+                    .SaveTo("..\\..\\..\\argb.png", ImageFormat.Png);
                     
                 bmp
                     .RemoveComponents(0)
                     .FromRgbToBitmap()
-                    .SaveTo("..\\..\\rgb.png", ImageFormat.Png)
+                    .SaveTo("..\\..\\..\\rgb.png", ImageFormat.Png)
                     .ShowFile();
             }
         }

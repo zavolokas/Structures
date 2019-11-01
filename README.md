@@ -1,6 +1,7 @@
 # Structures
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)]()
 [![Build Status](https://travis-ci.org/zavolokas/Structures.svg?branch=master)](https://travis-ci.org/zavolokas/Structures)
+[![Build Status](https://cloud.drone.io/api/badges/zavolokas/Structures/status.svg)](https://cloud.drone.io/zavolokas/Structures)
 
 // TODO: write a description with samples
 Area2DMap contains pairs of related dest and source Areas and also cummulative Dest and Source area.

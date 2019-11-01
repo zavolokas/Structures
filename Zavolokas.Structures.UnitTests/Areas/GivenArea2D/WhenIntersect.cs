@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using NUnit.Framework;
 using Zavolokas.Math.Combinatorics;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
-    [TestFixture]
     public class WhenIntersect
     {
-        [Test]
+        [Fact]
         public void Result_Should_Contain_Only_Points_That_Present_In_Both_Areas()
         {
             var areaA = Area2D.Create(10, 15, 24, 35);
@@ -22,12 +21,12 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
             for (var i = 0; i < areaC.ElementsCount; i++)
             {
                 var p = areaC[i];
-                Assert.That(areaA.GetPointIndex(p) > -1);
-                Assert.That(areaB.GetPointIndex(p) > -1);
+                areaA.GetPointIndex(p).ShouldBeGreaterThan(-1);
+                areaB.GetPointIndex(p).ShouldBeGreaterThan(-1);
             }
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Contain_All_Points_That_Present_In_Both_Areas()
         {
             var areaA = Area2D.Create(10, 15, 24, 35);
@@ -39,16 +38,16 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 var p = areaA[i];
                 if (areaB.GetPointIndex(p) != -1)
                 {
-                    Assert.That(areaC.GetPointIndex(p) > -1);
+                    areaC.GetPointIndex(p).ShouldBeGreaterThan(-1);
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Be_Equal_To_AreaB()
         {
-            var a = Area2D.Create(0, 0, 
-                new []
+            var a = Area2D.Create(0, 0,
+                new[]
                 {
                     new byte[] {1},
                     new byte[] {0},
@@ -57,51 +56,55 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
             var b = Area2D.Create(0, 2, 1, 1);
 
             var res = b.Intersect(a);
-            
-            Assert.That(res.IsSameAs(b));
+
+            res.IsSameAs(b).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Be_Empty_When_Areas_Have_No_Common_Elements()
         {
             var areaA = Area2D.Create(-5, -5, 5, 5);
             var areaB = Area2D.Create(3, 3, 5, 5);
             var areaC = areaA.Intersect(areaB);
 
-            Assert.That(areaC.IsEmpty);
+            areaC.IsEmpty.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Be_Empty_When_Area_Is_Empty()
         {
             var areaA = Area2D.Create(14, 10, 44, 15);
             var areaB = Area2D.Create(14, 10, 0, 0);
             var areaC = areaA.Intersect(areaB);
 
-            Assert.That(areaB.IsEmpty && areaC.IsEmpty && !areaA.IsEmpty);
+            areaA.IsEmpty.ShouldBeFalse();
+            areaB.IsEmpty.ShouldBeTrue();
+            areaC.IsEmpty.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Be_Empty_When_Both_Areas_Are_Empty()
         {
             var areaA = Area2D.Create(14, 10, 0, 0);
             var areaB = Area2D.Create(14, 10, 0, 0);
             var areaC = areaA.Intersect(areaB);
 
-            Assert.That(areaA.IsEmpty && areaB.IsEmpty && areaC.IsEmpty);
+            areaA.IsEmpty.ShouldBeTrue();
+            areaB.IsEmpty.ShouldBeTrue();
+            areaC.IsEmpty.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void Result_Should_Throw_ArgumentNullException_When_Area_Is_Null()
         {
             var areaA = Area2D.Create(14, 10, 44, 15);
-            Assert.Throws<ArgumentNullException>(() => areaA.Intersect(null));
+            Should.Throw<ArgumentNullException>(() => areaA.Intersect(null));
         }
 
-        [TestCase("256x128", "AreaIntersectionTest", ExpectedResult = true)]
+        [Theory]
+        [InlineData("256x128", "AreaIntersectionTest", true, Skip = "Don't know yet how to handle this properly on Travis CI")]
         //[TestCase("1280x720", "AreaIntersectionTest", ExpectedResult = true)]
-        [Ignore("Don't know yet how to handle this properly on Travis CI")]
-        public bool Should_Intersect_Areas(string size, string testName)
+        public void Should_Intersect_Areas(string size, string testName, bool result)
         {
             var noDiffs = true;
             var ts = TestSet.Init(size);
@@ -161,7 +164,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                 entry.Value.Dispose();
             }
 
-            return noDiffs;
+            noDiffs.ShouldBe(result);
         }
 
         private static void SaveToOutput(Dictionary<string, Bitmap> output, Area2D area, string fileName, string testName, string testPath)

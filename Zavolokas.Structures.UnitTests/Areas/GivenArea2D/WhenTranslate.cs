@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
 {
-    [TestFixture]
     public class WhenTranslate
     {
-        [Test]
+        [Fact]
         public void Should_Move_Area_To_Origin()
         {
-            var markup = new []
+            var markup = new[]
             {
                 new byte[] { 0,0,0,0,0,0,0,0,0},
                 new byte[] { 0,0,1,0,1,1,0,0,1},
@@ -22,17 +22,17 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
             var expected = new Rectangle(0, 0, 7, 5);
             var a = new Area2D(3, 2, markup);
 
-            a = a.Translate(-5,-3);
+            a = a.Translate(-5, -3);
 
             var isFailed = a.Bound.X != expected.X ||
                             a.Bound.Y != expected.Y ||
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Should_Move_Area_To_4_3()
         {
             var markup = new[]
@@ -54,10 +54,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Should_Move_Area_To_min5_3()
         {
             var markup = new[]
@@ -79,10 +79,10 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
                             a.Bound.Height != expected.Height ||
                             a.Bound.Width != expected.Width;
 
-            Assert.That(!isFailed);
+            isFailed.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Should_Result_In_Empty_Area()
         {
             var markup = new[]
@@ -102,7 +102,7 @@ namespace Zavolokas.Structures.UnitTests.Areas.GivenArea2D
             a = a.Translate(5, -4);
             b = b.Translate(-2, 6);
 
-            Assert.That(a.Substract(b).IsEmpty);
+            a.Substract(b).IsEmpty.ShouldBeTrue();
         }
     }
 }

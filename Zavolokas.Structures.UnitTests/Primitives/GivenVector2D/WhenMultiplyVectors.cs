@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 {
-    [TestFixture]
     public class WhenMultiplyVectors
     {
-        [Test]
+        [Fact]
         public void ShouldReturnNumber()
         {
             var v1 = new Vector2D(10, -5);
@@ -13,7 +13,7 @@ namespace Zavolokas.Structures.UnitTests.Primitives.GivenVector2D
 
             var result = v1 * v2;
 
-            Assert.AreEqual(370, result);
+            result.ShouldBe(370);
         }
     }
 }

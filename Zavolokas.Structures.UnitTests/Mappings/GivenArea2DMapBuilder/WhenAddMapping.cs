@@ -1,9 +1,9 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
 {
-    [TestFixture]
     public class WhenAddMapping
     {
         private Area2D _destArea;
@@ -11,8 +11,7 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
         private Area2DMap _mapping;
         private Area2DMapBuilder _mapBuilder;
 
-        [SetUp]
-        public void Setup()
+        public WhenAddMapping()
         {
             _mapBuilder = new Area2DMapBuilder();
 
@@ -25,17 +24,17 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMapBuilder
             _mapBuilder = new Area2DMapBuilder();
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_MapIsNotInitializedException_When_Called_Before_InitMap_Call()
         {
-            Assert.Throws<MapIsNotInitializedException>(() => _mapBuilder.AddMapping(_mapping));
+            Should.Throw<MapIsNotInitializedException>(() => _mapBuilder.AddMapping(_mapping));
         }
 
-        [Test]
+        [Fact]
         public void Should_Throw_ArgumentNullException_When_Mapping_Is_Null()
         {
             _mapBuilder.InitNewMap(_destArea, _sourceArea);
-            Assert.Throws<ArgumentNullException>(() => _mapBuilder.AddMapping(null));
+            Should.Throw<ArgumentNullException>(() => _mapBuilder.AddMapping(null));
         }
     }
 }

@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using NUnit.Framework;
-using Is = NUnit.Framework.Is;
+using Xunit;
+using Shouldly;
 
 namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
 {
-    [TestFixture]
     public class WhenGetDestElementsCount
     {
-        [TestCaseSource(nameof(GetMapAndCount))]
-        public void Should_Return_Correct_Bounds(int correctPointsCount, Area2DMap area2DMap)
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Should_Return_Correct_Bounds(int ind)
         {
-            Assert.That(area2DMap.DestElementsCount, Is.EqualTo(correctPointsCount));
+            var correctPointsCount = GetMapAndCount()[ind].Item1;
+            var area2DMap = GetMapAndCount()[ind].Item2;
+            area2DMap.DestElementsCount.ShouldBe(correctPointsCount);
         }
 
-        public static IEnumerable<TestCaseData> GetMapAndCount()
+        public static Tuple<int, Area2DMap>[] GetMapAndCount()
         {
-            var srcArea = Area2D.Create(0, 0, 3, 3);
+            var data = new List<Tuple<int, Area2DMap>>();
+
+              var srcArea = Area2D.Create(0, 0, 3, 3);
             var emptyArea = Area2D.Empty;
 
             var areas = new[]
@@ -26,14 +33,14 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
                 new Tuple<Area2D, Area2D>(Area2D.Create(-3, -3, 6, 6), srcArea)
             };
             var areaMap = new Area2DMap(areas, emptyArea);
-            yield return new TestCaseData(87, areaMap);
+            data.Add(new Tuple<int, Area2DMap>(87, areaMap));
 
             areas = new[]
             {
                 new Tuple<Area2D, Area2D>(Area2D.Create(0,0,5, 5), srcArea),
             };
             areaMap = new Area2DMap(areas, emptyArea);
-            yield return new TestCaseData(25, areaMap);
+            data.Add(new Tuple<int, Area2DMap>(25, areaMap));
 
             areas = new[]
             {
@@ -60,7 +67,7 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
                     srcArea),
             };
             areaMap = new Area2DMap(areas, emptyArea);
-            yield return new TestCaseData(4, areaMap);
+            data.Add(new Tuple<int, Area2DMap>(4, areaMap));
 
             areas = new[]
             {
@@ -88,7 +95,9 @@ namespace Zavolokas.Structures.UnitTests.Mappings.GivenArea2DMap
                 new Tuple<Area2D, Area2D>(Area2D.Create(4,4,20,20), srcArea),
             };
             areaMap = new Area2DMap(areas, emptyArea);
-            yield return new TestCaseData(402, areaMap);
+            data.Add(new Tuple<int, Area2DMap>(402, areaMap));
+
+            return data.ToArray();
         }
     }
 }
