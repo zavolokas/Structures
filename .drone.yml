@@ -24,7 +24,7 @@ steps:
       - dotnet pack Zavolokas.Structures -c Release -p:PackageVersion=2.0.0.$${DRONE_BUILD_NUMBER}
       - dotnet nuget push Zavolokas.Structures/bin/Release/Zavolokas.Structures.2.0.0.$${DRONE_BUILD_NUMBER}.nupkg -s https://api.nuget.org/v3/index.json -k $${NUGETKEY}
     when:
-      event: [push]
+      event: [tag]
       branch: [master]
   
   - name: publish-structures-gdi-nuget
@@ -37,5 +37,5 @@ steps:
       - dotnet pack Zavolokas.Structures.Gdi -c Release -p:PackageVersion=2.0.0.$${DRONE_BUILD_NUMBER}
       - dotnet nuget push Zavolokas.Structures.Gdi/bin/Release/Zavolokas.Structures.Gdi.2.0.0.$${DRONE_BUILD_NUMBER}.nupkg -s https://api.nuget.org/v3/index.json -k $${NUGETKEY}
     when:
-      event: [push]
+      event: [tag]
       branch: [master]
