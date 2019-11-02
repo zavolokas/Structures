@@ -1,8 +1,8 @@
 language: csharp
-solution: Zavolokas.Structures.sln
-install:
-  - nuget restore Zavolokas.Structures.sln
-  - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
+mono: none
+sudo: required
+dotnet: 2.2
 script:
-  - xbuild /p:Configuration=Debug Zavolokas.Structures.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Zavolokas.Structures.UnitTests/bin/Debug/Zavolokas.Structures.UnitTests.dll
+    - dotnet restore
+    - dotnet build
+    - dotnet test Zavolokas.Structures.UnitTests
